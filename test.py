@@ -1,6 +1,6 @@
 import unittest
 import load_data
-
+import make_graph
 
 class TestLoad(unittest.TestCase):
     def test_data_format(self):
@@ -23,6 +23,14 @@ class TestLoad(unittest.TestCase):
 
     def test_first_item_format(self):
         self.validate_item_format(load_data.load()[0][0])
+
+
+class TestGraph(unittest.TestCase):
+    def test_create_graph(self):
+        data = load_data.load()
+        graph = make_graph.convert_to_graph(data)
+
+        self.assertEqual(len(graph), 4, "All items should be converted to graph")
 
 
 if __name__ == '__main__':
