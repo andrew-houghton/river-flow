@@ -10,13 +10,19 @@ class TestLoad(unittest.TestCase):
         self.assertEqual(data.__class__, list, "Data should be a list of lists")
         self.assertEqual(data[0].__class__, list, "Columns should be list")
 
-    def test_item_format(self):
-        data = load_data.load()
-        first_item = data[0][0]
+    def validate_item_format(self, item):
+        self.assertEqual(item.__class__, float, "Data items should be floats")
+        self.assertGreater(item, -100, "Heights should be between above -100m")
+        self.assertLess(item, 3000, "Data items should be below 3000m")
 
-        self.assertEqual(first_item.__class__, float, "Data items should be floats")
-        self.assertGreater(first_item, -100, "Heights should be between above -100m")
-        self.assertLess(first_item, 3000, "Data items should be below 3000m")
+    def test_all_item_format(self):
+        data = load_data.load()
+        for i in data:
+            for j in i:
+                self.validate_item_format(j)
+
+    def test_first_item_format(self):
+        self.validate_item_format(load_data.load()[0][0])
 
 
 if __name__ == '__main__':
