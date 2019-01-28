@@ -8,10 +8,10 @@
 4. Flood low points;
 
 <ol type="a">
-  <li>Find all the points which are below all thier neighbours. These points are called lakes.</li>
-  <li>For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height</li>
-  <li>Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.</li>
-  <li>Otherwise merge the point into the lake and raise the height of the lake to be equal to the point that was just merged into the lake. Add the neighbours of the point that is being merged into the sorted collection of lake neighbours.</li>
+  <li>&nbsp;&nbsp;&nbsp;&nbsp;Find all the points which are below all thier neighbours. These points are called lakes.</li>
+  <li>&nbsp;&nbsp;&nbsp;&nbsp;For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height</li>
+  <li>&nbsp;&nbsp;&nbsp;&nbsp;Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.</li>
+  <li>&nbsp;&nbsp;&nbsp;&nbsp;Otherwise merge the point into the lake and raise the height of the lake to be equal to the point that was just merged into the lake. Add the neighbours of the point that is being merged into the sorted collection of lake neighbours.</li>
 </ol>
 
 5. Starting from the highest point send flow down to lower points.
