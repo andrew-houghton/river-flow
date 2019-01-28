@@ -33,5 +33,23 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(graph), 4, "All items should be converted to graph")
 
 
+    def test_graph_node_ordering(self):
+        data = load_data.load()
+        graph = make_graph.convert_to_graph(data)
+
+        for i in range(len(graph)-1):
+            self.assertLessEqual(graph[i].altitude,graph[i+1].altitude)
+
+    def test_node_conversion(self):
+        data=[[0.1, 0.2]]
+        graph = make_graph.convert_to_graph(data)
+
+        node = graph[1]
+
+        self.assertEqual(node.altitude,0.2)
+        self.assertEqual(node.flow,0.0)
+        self.assertEqual(node.original_location,(0,1))
+
+
 if __name__ == '__main__':
     unittest.main()
