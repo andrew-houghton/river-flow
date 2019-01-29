@@ -53,6 +53,7 @@ def connect_all_nodes(nodes):
         for col in range(len(nodes[row])):
             connect_node(nodes, row, col)
 
+
 def merge_pair(nodes, a, b):
     b.deleted = True
     # This is ugly
@@ -63,6 +64,7 @@ def merge_pair(nodes, a, b):
     a.outflow.remove(b)
     a.outflow.remove(a)
     a.original_location.update(b.original_location)
+
 
 def merge_equal_height_nodes(nodes):
     # Find equal height nodes
