@@ -23,7 +23,7 @@ def within_array_bounds(array,index):
 	return True
 
 def add_neighbour(node, neighbour):
-	if node.altitude < neighbour.altitude:
+	if node.altitude > neighbour.altitude:
 		node.outflow.add(neighbour)
 		neighbour.inflow.add(node)
 	else:

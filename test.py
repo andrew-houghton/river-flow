@@ -50,8 +50,9 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(node.altitude, 0.2)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, set([(0, 1)]))
-        self.assertEqual(len(node.inflow), 1)
-        self.assertEqual(len(node.outflow), 0)
+        self.assertEqual(len(node.inflow), 0)
+        self.assertEqual(len(node.outflow), 1)
+        self.assertEqual(graph[0], next(iter(node.outflow)))
 
 
 if __name__ == '__main__':
