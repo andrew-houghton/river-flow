@@ -8,3 +8,6 @@ class Node:
 
     def area(self):
         return len(self.original_location)
+
+    def __str__(self):
+    	return """Node - location:{} altitude:{}""".format(self.original_location,self.altitude)

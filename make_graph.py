@@ -22,13 +22,13 @@ def within_array_bounds(array,index):
 		return False
 	return True
 
-def add_neighbour(node, coordinate):
-	if node.altitude < coordinate.altitude:
-		node.outflow.add(coordinate)
-		coordinate.inflow.add(node)
+def add_neighbour(node, neighbour):
+	if node.altitude < neighbour.altitude:
+		node.outflow.add(neighbour)
+		neighbour.inflow.add(node)
 	else:
-		node.inflow.add(coordinate)
-		coordinate.outflow.add(node)
+		node.inflow.add(neighbour)
+		neighbour.outflow.add(node)
 
 def connect_node(nodes,row,col):
 	adjacent_coordinates = [
