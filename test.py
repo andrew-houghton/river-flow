@@ -57,8 +57,9 @@ class TestGraph(unittest.TestCase):
     def test_node_merging(self):
         data = [[0.1, 0.2], [0.1, 0.3]]
         graph = make_graph.convert_to_graph(data)
+        self.assertEqual(len(graph), 3)
+        
         node = graph[0]
-
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, set([(0, 0), (1, 0)]))
