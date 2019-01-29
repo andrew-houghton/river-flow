@@ -55,18 +55,24 @@ def connect_all_nodes(nodes):
 
 def merge_pair(nodes, a, b):
     b.deleted = True
+    # This is ugly
     a.inflow.update(b.inflow)
+    a.inflow.remove(b)
+    a.inflow.remove(a)
     a.outflow.update(b.outflow)
+    a.outflow.remove(b)
+    a.outflow.remove(a)
     a.original_location.update(b.original_location)
 
 def merge_equal_height_nodes(nodes):
+    # Find equal height nodes
     for node in nodes:
-        for neighbour in node.inflow.union(node.outflow):
-            if neighbour.altitude == node.altitude and not node.deleted:
-                print('merging')
-                print(neighbour,node)
-                # Get mergey
-                merge_pair(nodes, node, neighbour)
+        if not node.deleted:
+            # Check all neighbours of the nodes
+            for neighbour in node.inflow.union(node.outflow):
+                if neighbour.altitude == node.altitude:
+                    merge_pair(nodes, node, neighbour)
+    # Discard deleted nodes
     return [i for i in nodes if not i.deleted]
 
 

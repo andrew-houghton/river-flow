@@ -17,8 +17,5 @@ class Node:
     def __repr__(self):
         return self.__str__()
 
-    def __eq__(self, other):
-        return self.original_location == other.original_location
-
     def __hash__(self):
         return hash(tuple(self.original_location))
