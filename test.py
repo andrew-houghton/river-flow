@@ -2,12 +2,14 @@ import unittest
 import load_data
 import make_graph
 
+
 class TestLoad(unittest.TestCase):
     def test_data_format(self):
         data = load_data.load()
         self.assertGreater(len(data), 0, "Data should have rows")
         self.assertGreater(len(data[0]), 0, "Data should have columns")
-        self.assertEqual(data.__class__, list, "Data should be a list of lists")
+        self.assertEqual(data.__class__, list,
+                         "Data should be a list of lists")
         self.assertEqual(data[0].__class__, list, "Columns should be list")
 
     def validate_item_format(self, item):
@@ -30,25 +32,26 @@ class TestGraph(unittest.TestCase):
         data = load_data.load()
         graph = make_graph.convert_to_graph(data)
 
-        self.assertEqual(len(graph), 4, "All items should be converted to graph")
-
+        self.assertEqual(
+            len(graph), 4, "All items should be converted to graph")
 
     def test_graph_node_ordering(self):
         data = load_data.load()
         graph = make_graph.convert_to_graph(data)
 
         for i in range(len(graph)-1):
-            self.assertLessEqual(graph[i].altitude,graph[i+1].altitude)
+            self.assertLessEqual(graph[i].altitude, graph[i+1].altitude)
 
     def test_node_conversion(self):
-        data=[[0.1, 0.2]]
+        data = [[0.1, 0.2]]
         graph = make_graph.convert_to_graph(data)
-
         node = graph[1]
 
-        self.assertEqual(node.altitude,0.2)
-        self.assertEqual(node.flow,0.0)
-        self.assertEqual(node.original_location,(0,1))
+        self.assertEqual(node.altitude, 0.2)
+        self.assertEqual(node.flow, 0.0)
+        self.assertEqual(node.original_location, (0, 1))
+        self.assertEqual(len(node.inflow), 1)
+        self.assertEqual(len(node.outflow), 0)
 
 
 if __name__ == '__main__':
