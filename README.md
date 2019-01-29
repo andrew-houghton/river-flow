@@ -18,10 +18,13 @@
 list of list of heights
 list of list of nodes
 connect the nodes based on their location to the other nodes
-add all the nodes into a sorted collection
-return the sorted collection of linked nodes
+add all the nodes into a list
+return sort the list and return it
 
-When finding an item look for it by original_location
+**Notes:**
+
+* always merge towards the higher altitude node, then the position of the lake in the list will not need to change
+* When finding an item look for it by original_location
 
 # Data
 
