@@ -53,9 +53,26 @@ def connect_all_nodes(nodes):
         for col in range(len(nodes[row])):
             connect_node(nodes, row, col)
 
+def merge_pair(nodes, a, b):
+    b.deleted = True
+    a.inflow.update(b.inflow)
+    a.outflow.update(b.outflow)
+    a.original_location.update(b.original_location)
+
+def merge_equal_height_nodes(nodes):
+    for node in nodes:
+        for neighbour in node.inflow.union(node.outflow):
+            if neighbour.altitude == node.altitude and not node.deleted:
+                print('merging')
+                print(neighbour,node)
+                # Get mergey
+                merge_pair(nodes, node, neighbour)
+    return [i for i in nodes if not i.deleted]
+
 
 def convert_to_graph(data):
     nodes = map_to_node(data)
     connect_all_nodes(nodes)
     node_list = sum(nodes, [])
+    node_list = merge_equal_height_nodes(node_list)
     return sorted(node_list, key=attrgetter('altitude'))

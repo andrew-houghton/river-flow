@@ -5,6 +5,7 @@ class Node:
         self.original_location = set()
         self.altitude = None
         self.flow = 0.0
+        self.deleted = False
 
     def area(self):
         return len(self.original_location)
@@ -12,3 +13,12 @@ class Node:
     def __str__(self):
         return """Node - location:{} altitude:{}""".format(
             self.original_location, self.altitude)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        return self.original_location == other.original_location
+
+    def __hash__(self):
+        return hash(tuple(self.original_location))
