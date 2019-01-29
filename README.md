@@ -6,12 +6,22 @@
 2. Change the grid of heights in to a graph where each pixel is connected to the 4 points above, below and to each size.
 3. Check to see if any points are at the same height as their neighbour and merge these heights if they are.
 4. Flood low points;
-    * Find all the points which are below all thier neighbours. These points are called lakes.
+    * Find all the points which are below all their neighbours. These points are called lakes.
     * For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height
     * Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.
     * Otherwise merge the point into the lake and raise the height of the lake to be equal to the point that was just merged into the lake. Add the neighbours of the point that is being merged into the sorted collection of lake neighbours.
 5. Starting from the highest point send flow down to lower points.
 6. Create images for each step as flow is sent down and compile into an animation.
+
+# Data structure prep
+
+list of list of heights
+list of list of nodes
+connect the nodes based on their location to the other nodes
+add all the nodes into a sorted collection
+return the sorted collection of linked nodes
+
+When finding an item look for it by original_location
 
 # Data
 
