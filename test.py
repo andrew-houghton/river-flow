@@ -67,9 +67,16 @@ class TestGraph(unittest.TestCase):
         self.assertItemsEqual(node.inflow, set([graph[1], graph[2]]))
         self.assertEqual(len(node.outflow), 0)
 
-# class TestFlooding(unittest.TestCase):
-    # test adding the border of low points around the map
-    # check that the border is properly connected
+class TestFlooding(unittest.TestCase):
+    def test_border_exists(self):
+        data = [[1,2,3],[1,4,3],[1,2,3]]
+        graph = make_graph.convert_to_graph(data)
+
+        for node in graph:
+            if node.original_location == set([(1,1)]):
+                self.assertFalse(node.border)
+            else:
+                self.assertTrue(node.border)
 
 
 if __name__ == '__main__':

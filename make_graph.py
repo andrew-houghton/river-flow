@@ -1,6 +1,6 @@
 from node import Node
 from operator import attrgetter
-
+from pprint import pprint
 
 def to_node(row, col, altitude):
     node = Node()
@@ -10,10 +10,11 @@ def to_node(row, col, altitude):
 
 
 def map_to_node(data):
+    output = [[None]*len(data[0])]*len(data)
     for row in range(len(data)):
         for col in range(len(data[row])):
-            data[row][col] = to_node(row, col, data[row][col])
-    return data
+            output[row][col] = to_node(row, col, data[row][col])
+    return output
 
 
 def within_array_bounds(array, index):
@@ -56,7 +57,6 @@ def connect_all_nodes(nodes):
 
 def merge_pair(nodes, a, b):
     b.deleted = True
-    # This is ugly
     a.inflow.update(b.inflow)
     a.inflow.remove(b)
     a.inflow.remove(a)
