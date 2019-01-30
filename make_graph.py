@@ -72,6 +72,7 @@ def merge_pair(nodes, a, b):
     remove_if_exists(a.inflow, b)
     remove_if_exists(a.outflow, a)
     remove_if_exists(a.outflow, b)
+    a.border = a.border or b.border
     b.deleted = True
     a.original_location.update(b.original_location)
 

@@ -1,6 +1,7 @@
 import unittest
 import load_data
 import make_graph
+from functools import partial
 
 
 class TestLoad(unittest.TestCase):
@@ -66,16 +67,32 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(node.inflow), 2)
         self.assertEqual(len(node.outflow), 0)
 
-class TestFlooding(unittest.TestCase):
-    def test_border_exists(self):
-        data = [[1,2,3],[1,4,3],[1,2,3]]
-        graph = make_graph.convert_to_graph(data)
 
+class TestFlooding(unittest.TestCase):
+    def is_border_location(self,size, x, y):
+        return x == 0 or y == 0 or x == size-1 or y == size-1
+
+    def any_border_location(self,locations,size):
+        for i in locations:
+            if self.is_border_location(size, *i):
+                return True
+        return False
+
+
+    def test_border_exists_small(self):
+        data = [[1, 2, 3], [1, 4, 3], [1, 2, 3]]
+        graph = make_graph.convert_to_graph(data)
         for node in graph:
-            if node.original_location == {(1,1)}:
-                self.assertFalse(node.border)
-            else:
-                self.assertTrue(node.border)
+            node_touches_border = self.any_border_location(node.original_location, 3)
+            self.assertEqual(node_touches_border,node.border)
+
+    def test_border_exists_large(self):
+        size = 50
+        data = [list(range(size)) for i in range(size)]
+        graph = make_graph.convert_to_graph(data)
+        for node in graph:
+            node_touches_border = self.any_border_location(node.original_location, size)
+            self.assertEqual(node_touches_border,node.border)
 
 
 if __name__ == '__main__':
