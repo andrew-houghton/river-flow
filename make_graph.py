@@ -12,13 +12,12 @@ def to_node(row, col, altitude):
 def add_location_to_list(data):
     for i in range(len(data)):
         for j in range(len(data[i])):
-            data[i][j] = (i,j,data[i][j])
+            data[i][j] = (i, j, data[i][j])
     return data
 
+
 def map_to_node(data):
-    return [
-        [to_node(*item) for item in row] for row in data
-    ]
+    return [[to_node(*item) for item in row] for row in data]
 
 
 def within_array_bounds(array, index):
