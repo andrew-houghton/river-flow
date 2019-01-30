@@ -7,7 +7,7 @@
 3. Connect each node to it's neighbours (above, below and to each size)
 4. If two nodes of equal height are neighbours then merge them into one node
 5. Store all the nodes in a sorted list
-6. For all points which are on the edge of the map/area mark them as border points.
+6. For all points which touch the edge of the map/area mark them as border points.
 7. Flood low points;
     * Find all the points which are below all their neighbours. These points are called lakes.
     * For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height
@@ -16,13 +16,13 @@
 9. Starting from the highest point send flow down to lower points.
 10. Create images for each step as flow is sent down and compile into an animation.
 
-# Data structure prep
+# notes: Data structure prep
 
-list of list of heights
-list of list of nodes
-connect the nodes based on their location to the other nodes
-add all the nodes into a deque
-sort the deque and return it
+* list of list of heights
+* list of list of nodes
+* connect the nodes based on their location to the other nodes
+* add all the nodes into a deque
+* sort the deque and return it
 
 **Notes:**
 
