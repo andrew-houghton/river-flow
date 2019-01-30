@@ -1,6 +1,6 @@
 from node import Node
 from operator import attrgetter
-from pprint import pprint
+
 
 def to_node(row, col, altitude):
     node = Node()
@@ -9,12 +9,16 @@ def to_node(row, col, altitude):
     return node
 
 
+def add_location_to_list(data):
+    for i in range(len(data)):
+        for j in range(len(data[i])):
+            data[i][j] = (i,j,data[i][j])
+    return data
+
 def map_to_node(data):
-    output = [[None]*len(data[0])]*len(data)
-    for row in range(len(data)):
-        for col in range(len(data[row])):
-            output[row][col] = to_node(row, col, data[row][col])
-    return output
+    return [
+        [to_node(*item) for item in row] for row in data
+    ]
 
 
 def within_array_bounds(array, index):
@@ -47,6 +51,7 @@ def connect_node(nodes, row, col):
 
     for neighbour in neighbours:
         add_neighbour(nodes[row][col], neighbour)
+    nodes[row][col].border = len(neighbours) != 4
 
 
 def connect_all_nodes(nodes):
@@ -55,14 +60,19 @@ def connect_all_nodes(nodes):
             connect_node(nodes, row, col)
 
 
+def remove_if_exists(full_set, item):
+    if item in full_set:
+        full_set.remove(item)
+
+
 def merge_pair(nodes, a, b):
-    b.deleted = True
     a.inflow.update(b.inflow)
-    a.inflow.remove(b)
-    a.inflow.remove(a)
     a.outflow.update(b.outflow)
-    a.outflow.remove(b)
-    a.outflow.remove(a)
+    remove_if_exists(a.inflow, a)
+    remove_if_exists(a.inflow, b)
+    remove_if_exists(a.outflow, a)
+    remove_if_exists(a.outflow, b)
+    b.deleted = True
     a.original_location.update(b.original_location)
 
 
@@ -79,7 +89,8 @@ def merge_equal_height_nodes(nodes):
 
 
 def convert_to_graph(data):
-    nodes = map_to_node(data)
+    location_and_altitude = add_location_to_list(data)
+    nodes = map_to_node(location_and_altitude)
     connect_all_nodes(nodes)
     node_list = sum(nodes, [])
     node_list = merge_equal_height_nodes(node_list)

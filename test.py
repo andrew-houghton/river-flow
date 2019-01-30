@@ -31,7 +31,6 @@ class TestGraph(unittest.TestCase):
     def test_create_graph(self):
         data = load_data.load()
         graph = make_graph.convert_to_graph(data)
-
         self.assertEqual(
             len(graph), 4, "All items should be converted to graph")
 
@@ -49,7 +48,7 @@ class TestGraph(unittest.TestCase):
 
         self.assertEqual(node.altitude, 0.2)
         self.assertEqual(node.flow, 0.0)
-        self.assertEqual(node.original_location, set([(0, 1)]))
+        self.assertEqual(node.original_location, {(0, 1)})
         self.assertEqual(len(node.inflow), 0)
         self.assertEqual(len(node.outflow), 1)
         self.assertEqual(graph[0], next(iter(node.outflow)))
@@ -62,9 +61,9 @@ class TestGraph(unittest.TestCase):
         node = graph[0]
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
-        self.assertEqual(node.original_location, set([(0, 0), (1, 0)]))
+        self.assertEqual(node.original_location, {(0, 0), (1, 0)})
+        self.assertItemsEqual(node.inflow, {graph[1], graph[2]})
         self.assertEqual(len(node.inflow), 2)
-        self.assertItemsEqual(node.inflow, set([graph[1], graph[2]]))
         self.assertEqual(len(node.outflow), 0)
 
 class TestFlooding(unittest.TestCase):
@@ -73,7 +72,7 @@ class TestFlooding(unittest.TestCase):
         graph = make_graph.convert_to_graph(data)
 
         for node in graph:
-            if node.original_location == set([(1,1)]):
+            if node.original_location == {(1,1)}:
                 self.assertFalse(node.border)
             else:
                 self.assertTrue(node.border)
