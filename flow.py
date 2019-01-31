@@ -1,8 +1,4 @@
-def write_image(nodes):
-	# wew
-	pass
-
-def simulate_flow(nodes):
+def simulate_flow(nodes,image_writer):
 	for node in nodes:
 		node.flow += node.area()
 		if len(node.outflow)>0 and not node.border:
@@ -12,4 +8,4 @@ def simulate_flow(nodes):
 
 			for i in node.outflow:
 				i.flow += (node.altitude-i.altitude)*node.flow/total_height_out
-		write_image(nodes)
+		image_writer.write(nodes)
