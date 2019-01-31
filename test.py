@@ -6,6 +6,7 @@ import time
 from flow import simulate_flow
 from image_writer import ImageWriter
 
+
 class TestLoad(unittest.TestCase):
     def test_data_format(self):
         data = load_data.load()
@@ -89,7 +90,7 @@ class TestFlooding(unittest.TestCase):
             self.assertEqual(node_touches_border, node.border)
 
     def test_border_exists_large(self):
-        size=50
+        size = 50
         data = [list(range(size)) for i in range(size)]
         graph = make_graph.convert_to_graph(data)
         for node in graph:
@@ -97,12 +98,14 @@ class TestFlooding(unittest.TestCase):
                 node.original_location, size)
             self.assertEqual(node_touches_border, node.border)
 
+
 class TestFlow(unittest.TestCase):
     def test_1d_flow(self):
-        data=[[1,2,3]]
+        data = [[1, 2, 3]]
         graph = make_graph.convert_to_graph(data)
-        writer=ImageWriter()
-        simulate_flow(graph,writer)
+        writer = ImageWriter()
+        simulate_flow(graph, writer)
+
 
 if __name__ == '__main__':
     unittest.main()
