@@ -5,7 +5,7 @@ from functools import partial
 import time
 from flow import simulate_flow
 from image_writer import ImageWriter
-
+from unittest.mock import MagicMock
 
 class TestLoad(unittest.TestCase):
     def test_data_format(self):
@@ -104,7 +104,9 @@ class TestFlow(unittest.TestCase):
         data = [[1, 2, 3]]
         graph = make_graph.convert_to_graph(data)
         writer = ImageWriter()
+        writer.write = MagicMock()
         simulate_flow(graph, writer)
+        self.assertEqual(writer.write.call_count,3)
 
 
 if __name__ == '__main__':
