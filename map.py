@@ -10,27 +10,27 @@ def flatten_list(list_of_lists):
 
 
 class LocationGraph:
-    def __init__(self, height_map):
-        self.node_grid = map_with_index(to_node, height_map)
-        self.connect_nodes()
-        self.node_list = flatten_list(self.node_grid)
-        self.flag_borders()
-
     def to_node(self, row, col, altitude):
         node = Node()
         node.altitude = altitude
         node.original_location.add((row, col))
         return node
 
+    def __init__(self, height_map):
+        self.node_grid = map_with_index(self.to_node, height_map)
+        self.connect_nodes()
+        self.node_list = flatten_list(self.node_grid)
+        # self.flag_borders()
+
     def add_downstream_flow(self, higher_node, lower_node):
-        node.outflow.add(neighbour)
-        neighbour.inflow.add(node)
+        higher_node.outflow.add(lower_node)
+        lower_node.inflow.add(higher_node)
 
     def add_neighbour(self, node, neighbour):
         if node.altitude > neighbour.altitude:
-            add_downstream_flow(node, neighbour)
+            self.add_downstream_flow(node, neighbour)
         else:
-            add_downstream_flow(neighbour, node)
+            self.add_downstream_flow(neighbour, node)
 
     def connect_node(self, row, col, item):
         adjacent_coordinates = [
@@ -42,7 +42,7 @@ class LocationGraph:
 
         for row, col in adjacent_coordinates:
             try:
-                add_neighbour(item, self.node_grid[row][col])
+                self.add_neighbour(item, self.node_grid[row][col])
             except IndexError as e:
                 pass
 

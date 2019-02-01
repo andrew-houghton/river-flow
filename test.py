@@ -1,11 +1,11 @@
 import unittest
 import load_data
 import make_graph
-from functools import partial
 import time
 from flow import simulate_flow
 from image_writer import ImageWriter
 from unittest.mock import MagicMock
+from map import LocationGraph
 
 
 class TestLoad(unittest.TestCase):
@@ -35,9 +35,9 @@ class TestLoad(unittest.TestCase):
 class TestGraph(unittest.TestCase):
     def test_create_graph(self):
         data = load_data.load()
-        graph = make_graph.create_graph(data)
+        graph = LocationGraph(data)
         self.assertEqual(
-            len(graph), 4, "All items should be converted to graph")
+            len(graph.node_list), 4, "All items should be converted to graph")
 
     def test_graph_node_ordering(self):
         data = load_data.load()
