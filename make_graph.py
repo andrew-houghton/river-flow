@@ -53,7 +53,7 @@ def connect_node(nodes, row, col):
     nodes[row][col].border = len(neighbours) != 4
 
 
-def connect_all_nodes(nodes):
+def connect_nodes(nodes):
     for row in range(len(nodes)):
         for col in range(len(nodes[row])):
             connect_node(nodes, row, col)
@@ -88,10 +88,18 @@ def merge_equal_height_nodes(nodes):
     return [i for i in nodes if not i.deleted]
 
 
-def convert_to_graph(data):
-    location_and_altitude = add_location_to_list(data)
-    nodes = map_to_node(location_and_altitude)
-    connect_all_nodes(nodes)
-    node_list = sum(nodes, [])
+def flatten_list(list_of_lists):
+    return sum(list_of_lists, [])
+
+
+def create_nodes(height_map):
+    location_and_altitude = add_location_to_list(height_map)
+    return map_to_node(location_and_altitude)
+
+
+def create_graph(height_grid):
+    node_grid = create_nodes(height_grid)
+    connect_nodes(node_grid)
+    node_list = flatten_list(node_grid)
     node_list = merge_equal_height_nodes(node_list)
     return sorted(node_list, key=attrgetter('altitude'))
