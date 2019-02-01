@@ -1,5 +1,5 @@
 def simulate_flow(nodes, image_writer):
-    for node in nodes:
+    for node in nodes[::-1]:
         node.flow += node.area()
         if len(node.outflow) > 0 and not node.border:
             total_height_out = 0.0
