@@ -1,4 +1,5 @@
 from node import Node
+from operator import attrgetter
 
 
 def map_with_index(func, data):
@@ -9,7 +10,7 @@ class LocationGraph:
     def __init__(self, height_map):
         self.node_grid = map_with_index(self.to_node, height_map)
         self.connect_nodes()
-        make_sorted_linked_list(self.node_grid)
+        self.make_sorted_linked_list(self.node_grid)
 
     def to_node(self, row, col, altitude):
         node = Node()
@@ -17,8 +18,8 @@ class LocationGraph:
         node.original_location.add((row, col))
         return node
 
-    def make_sorted_linked_list(list_of_lists):
-        sorted_list = sorted(sum(list_of_lists, []))
+    def make_sorted_linked_list(self,list_of_lists):
+        sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
         self.highest_node = sorted_list[0]
         self.lowest_node = sorted_list[-1]
 
@@ -26,7 +27,7 @@ class LocationGraph:
             if i > 0:
                 sorted_list[i].prev = sorted_list[i-1]
             if i < len(sorted_list)-1:
-                sorted_list[i].next = node[i+1]
+                sorted_list[i].next = sorted_list[i+1]
 
     def add_downstream_flow(self, higher_node, lower_node):
         higher_node.outflow.add(lower_node)
