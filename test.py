@@ -39,7 +39,7 @@ class TestGraph(unittest.TestCase):
 
     def test_graph_node_ordering(self):
         graph = LocationGraph(load_data.load())
-        node_list = graph.node_list
+        node_list = list(graph.ascending())
         for i in range(len(node_list) - 1):
             self.assertLessEqual(node_list[i].altitude, node_list[i + 1].altitude)
 
@@ -52,14 +52,13 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(node.original_location, {(0, 1)})
         self.assertEqual(len(node.inflow), 0)
         self.assertEqual(len(node.outflow), 1)
-        self.assertEqual(graph.node_list[0], next(iter(node.outflow)))
+        self.assertEqual(graph.first, next(iter(node.outflow)))
 
     def test_node_merging(self):
         graph = LocationGraph([[0.1, 0.2], [0.1, 0.3]])
-        node_list = graph.node_list
-        self.assertEqual(len(node_list), 3)
+        self.assertEqual(graph.length(), 3)
 
-        node = node_list[0]
+        node = graph.first
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, {(0, 0), (1, 0)})
