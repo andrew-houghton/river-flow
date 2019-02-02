@@ -7,6 +7,9 @@ class Node:
         self.flow = 0.0
         self.deleted = False
         self.border = False
+        self.next=None
+        self.prev=None
+        self._iteration_index=None
 
     def area(self):
         return len(self.original_location)

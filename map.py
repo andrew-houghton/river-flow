@@ -18,10 +18,10 @@ class LocationGraph:
         node.original_location.add((row, col))
         return node
 
-    def make_sorted_linked_list(self,list_of_lists):
+    def make_sorted_linked_list(self, list_of_lists):
         sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
-        self.highest_node = sorted_list[0]
-        self.lowest_node = sorted_list[-1]
+        self.first = sorted_list[0] # Lowest node
+        self.last = sorted_list[-1] # Highest node
 
         for i in range(len(sorted_list)):
             if i > 0:
@@ -50,3 +50,12 @@ class LocationGraph:
 
     def connect_nodes(self):
         map_with_index(self.connect_node, self.node_grid)
+
+    def ascending(self):
+        node = self.first
+        while node != None:
+            yield node
+            node = node.next
+
+    def length(self):
+        return sum(1 for x in self.ascending())

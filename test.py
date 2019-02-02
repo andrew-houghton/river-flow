@@ -35,8 +35,7 @@ class TestLoad(unittest.TestCase):
 class TestGraph(unittest.TestCase):
     def test_create_graph(self):
         graph = LocationGraph(load_data.load())
-        self.assertEqual(
-            len(graph.node_list), 4, "All items should be converted to graph")
+        self.assertEqual(graph.length(), 4, "All items should be converted to graph")
 
     def test_graph_node_ordering(self):
         graph = LocationGraph(load_data.load())
@@ -46,7 +45,7 @@ class TestGraph(unittest.TestCase):
 
     def test_node_conversion(self):
         graph = LocationGraph([[0.1, 0.2]])
-        node = graph.node_list[1]
+        node = graph.last
 
         self.assertEqual(node.altitude, 0.2)
         self.assertEqual(node.flow, 0.0)
