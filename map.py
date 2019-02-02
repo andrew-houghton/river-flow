@@ -20,7 +20,6 @@ class LocationGraph:
         self.node_grid = map_with_index(self.to_node, height_map)
         self.connect_nodes()
         self.node_list = flatten_list(self.node_grid)
-        # self.flag_borders()
 
     def add_downstream_flow(self, higher_node, lower_node):
         higher_node.outflow.add(lower_node)
@@ -41,11 +40,10 @@ class LocationGraph:
         ]
 
         for row, col in adjacent_coordinates:
-            try:
+            if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
                 self.add_neighbour(item, self.node_grid[row][col])
-            except IndexError as e:
-                pass
+            else:
+                item.border == True
 
     def connect_nodes(self):
         map_with_index(self.connect_node, self.node_grid)
-        # TODO set borders

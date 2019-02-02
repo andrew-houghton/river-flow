@@ -34,40 +34,37 @@ class TestLoad(unittest.TestCase):
 
 class TestGraph(unittest.TestCase):
     def test_create_graph(self):
-        data = load_data.load()
-        graph = LocationGraph(data)
+        graph = LocationGraph(load_data.load())
         self.assertEqual(
             len(graph.node_list), 4, "All items should be converted to graph")
 
     def test_graph_node_ordering(self):
-        data = load_data.load()
-        graph = make_graph.create_graph(data)
-
-        for i in range(len(graph) - 1):
-            self.assertLessEqual(graph[i].altitude, graph[i + 1].altitude)
+        graph = LocationGraph(load_data.load())
+        node_list = graph.node_list
+        for i in range(len(node_list) - 1):
+            self.assertLessEqual(node_list[i].altitude, node_list[i + 1].altitude)
 
     def test_node_conversion(self):
-        data = [[0.1, 0.2]]
-        graph = make_graph.create_graph(data)
-        node = graph[1]
+        graph = LocationGraph([[0.1, 0.2]])
+        node = graph.node_list[1]
 
         self.assertEqual(node.altitude, 0.2)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, {(0, 1)})
         self.assertEqual(len(node.inflow), 0)
         self.assertEqual(len(node.outflow), 1)
-        self.assertEqual(graph[0], next(iter(node.outflow)))
+        self.assertEqual(graph.node_list[0], next(iter(node.outflow)))
 
     def test_node_merging(self):
-        data = [[0.1, 0.2], [0.1, 0.3]]
-        graph = make_graph.create_graph(data)
-        self.assertEqual(len(graph), 3)
+        graph = LocationGraph([[0.1, 0.2], [0.1, 0.3]])
+        node_list = graph.node_list
+        self.assertEqual(len(node_list), 3)
 
-        node = graph[0]
+        node = node_list[0]
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, {(0, 0), (1, 0)})
-        self.assertEqual(node.inflow, {graph[1], graph[2]})
+        self.assertEqual(node.inflow, {node_list[1], node_list[2]})
         self.assertEqual(len(node.inflow), 2)
         self.assertEqual(len(node.outflow), 0)
 

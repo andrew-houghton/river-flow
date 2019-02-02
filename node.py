@@ -6,6 +6,7 @@ class Node:
         self.altitude = None
         self.flow = 0.0
         self.deleted = False
+        self.border = False
 
     def area(self):
         return len(self.original_location)
