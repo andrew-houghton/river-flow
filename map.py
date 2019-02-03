@@ -2,15 +2,15 @@ from node import Node
 from operator import attrgetter
 
 
-def map_with_index(func, data):
-    return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
-
-
 class LocationGraph:
     def __init__(self, height_map):
-        self.node_grid = map_with_index(self.to_node, height_map)
+        self.node_grid = self.map_with_index(self.to_node, height_map)
         self.connect_nodes()
         self.make_sorted_linked_list(self.node_grid)
+        self.merge_equal_height_nodes()
+
+    def map_with_index(self, func, data):
+        return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
 
     def to_node(self, row, col, altitude):
         node = Node()
@@ -20,8 +20,8 @@ class LocationGraph:
 
     def make_sorted_linked_list(self, list_of_lists):
         sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
-        self.first = sorted_list[0] # Lowest node
-        self.last = sorted_list[-1] # Highest node
+        self.first = sorted_list[0]  # Lowest node
+        self.last = sorted_list[-1]  # Highest node
 
         for i in range(len(sorted_list)):
             if i > 0:
@@ -49,7 +49,35 @@ class LocationGraph:
                 item.border == True
 
     def connect_nodes(self):
-        map_with_index(self.connect_node, self.node_grid)
+        self.map_with_index(self.connect_node, self.node_grid)
+
+    def remove_if_exists(self, full_set, item):
+        if item in full_set:
+            full_set.remove(item)
+
+    def join_flow_sets(self, a, b):
+        a.inflow.update(b.inflow)
+        a.outflow.update(b.outflow)
+        self.remove_if_exists(a.inflow, a)
+        self.remove_if_exists(a.inflow, b)
+        self.remove_if_exists(a.outflow, a)
+        self.remove_if_exists(a.outflow, b)
+
+    def remove_node(self, node):
+        node.next.prev = node.prev
+        node.prev.next = node.next
+
+    def merge_pair(self, original_node, merged_node):
+        a.border = a.border or b.border
+        a.original_location.update(b.original_location)
+        self.join_flow_sets(original_node, merged_node)
+        self.remove_node(merged_node)
+
+    def merge_equal_height_nodes(self):
+        for node in self.ascending():
+            for neighbour in node.inflow.union(node.outflow):
+                if neighbour.altitude == node.altitude:
+                    self.merge_pair(node, neighbour)
 
     def ascending(self):
         node = self.first

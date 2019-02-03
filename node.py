@@ -5,7 +5,6 @@ class Node:
         self.original_location = set()
         self.altitude = None
         self.flow = 0.0
-        self.deleted = False
         self.border = False
         self.next=None
         self.prev=None
