@@ -2,7 +2,7 @@ from node import Node
 from operator import attrgetter
 
 
-class LocationGraph:
+class LocationGraphFactory:
     def __init__(self, height_map):
         self.node_grid = self.map_with_index(self.to_node, height_map)
         self.map_with_index(self.set_border, self.node_grid)
@@ -24,7 +24,8 @@ class LocationGraph:
         return node
 
     def make_sorted_linked_list(self, list_of_lists):
-        sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
+        sorted_list = sorted(sum(list_of_lists, []),
+                             key=attrgetter('altitude'))
         self.first = sorted_list[0]  # Lowest node
         self.last = sorted_list[-1]  # Highest node
 
@@ -45,7 +46,8 @@ class LocationGraph:
             self.add_downstream_flow(neighbour, node)
 
     def connect_node(self, row, col, item):
-        adjacent_coordinates = [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
+        adjacent_coordinates = [
+            (row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
 
         for row, col in adjacent_coordinates:
             if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
@@ -89,7 +91,7 @@ class LocationGraph:
         while node != None:
             yield node
             node = node.next
-    
+
     def descending(self):
         node = self.last
         while node != None:
