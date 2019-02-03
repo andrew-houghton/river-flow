@@ -1,6 +1,5 @@
 import unittest
 import load_data
-import make_graph
 import time
 from flow import simulate_flow
 from image_writer import ImageWriter
@@ -78,18 +77,16 @@ class TestFlooding(unittest.TestCase):
         return False
 
     def test_border_exists_small(self):
-        data = [[1, 2, 3], [1, 4, 3], [1, 2, 3]]
-        graph = make_graph.create_graph(data)
-        for node in graph:
+        graph = LocationGraph([[1, 2, 3], [1, 4, 3], [1, 2, 3]])
+        for node in graph.ascending():
             node_touches_border = self.any_border_location(
                 node.original_location, 3)
             self.assertEqual(node_touches_border, node.border)
 
     def test_border_exists_large(self):
         size = 50
-        data = [list(range(size)) for i in range(size)]
-        graph = make_graph.create_graph(data)
-        for node in graph:
+        graph = LocationGraph([list(range(size)) for i in range(size)])
+        for node in graph.ascending():
             node_touches_border = self.any_border_location(
                 node.original_location, size)
             self.assertEqual(node_touches_border, node.border)
@@ -100,7 +97,7 @@ class TestFlow(unittest.TestCase):
         return [list(range(n * i, n*(i+1))) for i in range(n)]
 
     def flow(self, data):
-        graph = make_graph.create_graph(data)
+        graph = LocationGraph(data)
         writer = ImageWriter()
         writer.write = MagicMock()
         nodes_with_flow = simulate_flow(graph, writer)

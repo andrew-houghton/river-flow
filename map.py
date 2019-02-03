@@ -5,9 +5,14 @@ from operator import attrgetter
 class LocationGraph:
     def __init__(self, height_map):
         self.node_grid = self.map_with_index(self.to_node, height_map)
+        self.map_with_index(self.set_border, self.node_grid)
         self.connect_nodes()
         self.make_sorted_linked_list(self.node_grid)
         self.merge_equal_height_nodes()
+
+    def set_border(self, i, j, node):
+        node.border = i == 0 or j == 0 or i == len(
+            self.node_grid)-1 or j == len(self.node_grid[0])-1
 
     def map_with_index(self, func, data):
         return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
@@ -45,8 +50,6 @@ class LocationGraph:
         for row, col in adjacent_coordinates:
             if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
                 self.add_neighbour(item, self.node_grid[row][col])
-            else:
-                item.border == True
 
     def connect_nodes(self):
         self.map_with_index(self.connect_node, self.node_grid)
@@ -64,8 +67,10 @@ class LocationGraph:
         self.remove_if_exists(a.outflow, b)
 
     def remove_node(self, node):
-        node.next.prev = node.prev
-        node.prev.next = node.next
+        if node.next is not None:
+            node.next.prev = node.prev
+        if node.prev is not None:
+            node.prev.next = node.next
 
     def merge_pair(self, original_node, merged_node):
         self.join_flow_sets(original_node, merged_node)
