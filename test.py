@@ -62,7 +62,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.original_location, {(0, 0), (1, 0)})
-        self.assertEqual(node.inflow, {node_list[1], node_list[2]})
+        self.assertEqual(node.inflow, {node.next, node.next.next})
         self.assertEqual(len(node.inflow), 2)
         self.assertEqual(len(node.outflow), 0)
 

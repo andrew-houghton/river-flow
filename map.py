@@ -68,9 +68,9 @@ class LocationGraph:
         node.prev.next = node.next
 
     def merge_pair(self, original_node, merged_node):
-        a.border = a.border or b.border
-        a.original_location.update(b.original_location)
         self.join_flow_sets(original_node, merged_node)
+        original_node.border = original_node.border or merged_node.border
+        original_node.original_location.update(merged_node.original_location)
         self.remove_node(merged_node)
 
     def merge_equal_height_nodes(self):
