@@ -102,7 +102,7 @@ class TestFlow(unittest.TestCase):
         writer.write = MagicMock()
         nodes_with_flow = simulate_flow(graph, writer)
         self.assertEqual(writer.write.call_count, sum([len(i) for i in data]))
-        return [i.flow for i in nodes_with_flow]
+        return [i.flow for i in nodes_with_flow.ascending()]
 
     def test_1d_flow(self):
         flows = self.flow([[1, 2, 3]])

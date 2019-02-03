@@ -89,6 +89,12 @@ class LocationGraph:
         while node != None:
             yield node
             node = node.next
+    
+    def descending(self):
+        node = self.last
+        while node != None:
+            yield node
+            node = node.prev
 
     def length(self):
         return sum(1 for x in self.ascending())
