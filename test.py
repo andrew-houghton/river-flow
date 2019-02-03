@@ -67,6 +67,12 @@ class TestGraph(unittest.TestCase):
 
 
 class TestFlooding(unittest.TestCase):
+    def all_nodes_have_outflow(self, nodes):
+        for node in nodes:
+            if not node.border and len(node.outflow)==0:
+                return False
+        return True
+
     def is_border_location(self, size, x, y):
         return x == 0 or y == 0 or x == size-1 or y == size-1
 
@@ -91,6 +97,17 @@ class TestFlooding(unittest.TestCase):
                 node.original_location, size)
             self.assertEqual(node_touches_border, node.border)
 
+    def test_one_point_is_flooded(self):
+        pass
+
+    def test_one_lake_flooded(self):
+        pass
+
+    def test_two_lakes_flooded(self):
+        pass
+
+    def test_large_lake(self):
+        pass
 
 class TestFlow(unittest.TestCase):
     def square_list(self, n):
