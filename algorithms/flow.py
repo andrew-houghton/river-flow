@@ -1,4 +1,4 @@
-def simulate_flow(graph, image_writer):
+def flow(graph, image_writer):
     for node in graph.descending():
         node.flow += node.area()
         if len(node.outflow) > 0 and not node.border:

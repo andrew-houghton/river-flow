@@ -1,15 +1,15 @@
 import unittest
-import load_data
+from utils.load_data import load_data
 import time
-from flow import simulate_flow
-from image_writer import ImageWriter
+from algorithms.flow import flow
+from utils.image_writer import ImageWriter
 from unittest.mock import MagicMock
-from map import LocationGraph
+from data_structures.location_graph import LocationGraph
 
 
 class TestLoad(unittest.TestCase):
     def test_data_format(self):
-        data = load_data.load()
+        data = load_data()
         self.assertGreater(len(data), 0, "Data should have rows")
         self.assertGreater(len(data[0]), 0, "Data should have columns")
         self.assertEqual(data.__class__, list,
@@ -22,22 +22,22 @@ class TestLoad(unittest.TestCase):
         self.assertLess(item, 3000, "Data items should be below 3000m")
 
     def test_all_item_format(self):
-        data = load_data.load()
+        data = load_data()
         for i in data:
             for j in i:
                 self.validate_item_format(j)
 
     def test_first_item_format(self):
-        self.validate_item_format(load_data.load()[0][0])
+        self.validate_item_format(load_data()[0][0])
 
 
 class TestGraph(unittest.TestCase):
     def test_create_graph(self):
-        graph = LocationGraph(load_data.load())
+        graph = LocationGraph(load_data())
         self.assertEqual(graph.length(), 4, "All items should be converted to graph")
 
     def test_graph_node_ordering(self):
-        graph = LocationGraph(load_data.load())
+        graph = LocationGraph(load_data())
         node_list = list(graph.ascending())
         for i in range(len(node_list) - 1):
             self.assertLessEqual(node_list[i].altitude, node_list[i + 1].altitude)
@@ -117,7 +117,7 @@ class TestFlow(unittest.TestCase):
         graph = LocationGraph(data)
         writer = ImageWriter()
         writer.write = MagicMock()
-        nodes_with_flow = simulate_flow(graph, writer)
+        nodes_with_flow = flow(graph, writer)
         self.assertEqual(writer.write.call_count, sum([len(i) for i in data]))
         return [i.flow for i in nodes_with_flow.ascending()]
 

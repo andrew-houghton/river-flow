@@ -1,3 +1,5 @@
+from data_structures.location_graph_factory import LocationGraphFactory
+
 class LocationGraph:
     def __init__(self, height_map):
         factory = LocationGraphFactory(height_map)
