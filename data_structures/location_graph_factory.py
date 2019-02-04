@@ -61,6 +61,8 @@ class LocationGraphFactory:
             full_set.remove(item)
 
     def join_flow_sets(self, a, b):
+        # when merging inflow and outflow of the old node needs to transfer to the new node.
+
         a.inflow.update(b.inflow)
         a.outflow.update(b.outflow)
         self.remove_if_exists(a.inflow, a)
@@ -75,16 +77,22 @@ class LocationGraphFactory:
             node.prev.next = node.next
 
     def merge_pair(self, original_node, merged_node):
+        print(f"merging {merged_node.original_location} into {original_node.original_location}")
         self.join_flow_sets(original_node, merged_node)
         original_node.border = original_node.border or merged_node.border
         original_node.original_location.update(merged_node.original_location)
         self.remove_node(merged_node)
 
+
+
     def merge_equal_height_nodes(self):
         for node in self.ascending():
+            print(f'started checking {node.original_location}')
             for neighbour in node.inflow.union(node.outflow):
+                print(f'checking if {node.original_location} should be merged with {neighbour.original_location}')
                 if neighbour.altitude == node.altitude:
                     self.merge_pair(node, neighbour)
+            print(f'finished checking {node.original_location}')
 
     def ascending(self):
         node = self.first
