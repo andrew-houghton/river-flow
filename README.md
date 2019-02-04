@@ -3,6 +3,7 @@
 ## Pictures
 
 **Sample of input data:**
+
 ![Sample of input data](docs/sample.jpg)
  
 ## Method
