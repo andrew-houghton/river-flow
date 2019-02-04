@@ -27,6 +27,7 @@ class TestGraph(unittest.TestCase):
 
     def test_node_merging(self):
         graph = LocationGraph([[0.1, 0.2], [0.1, 0.3]])
+
         self.assertEqual(graph.length(), 3)
 
         node = graph.first

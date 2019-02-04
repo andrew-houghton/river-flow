@@ -1,5 +1,6 @@
 from operator import attrgetter
 
+
 def remove_if_exists(_set, item):
     if item in _set:
         _set.remove(item)
@@ -21,16 +22,16 @@ class Node:
         return len(self.original_location)
 
     def move_flows(self, other, flow, opposite_flow):
+        remove_if_exists(flow(other), self)
         for n in flow(other):
             opposite_flow(n).remove(other)
             opposite_flow(n).add(self)
-
-        remove_if_exists(flow(other),self)
-        remove_if_exists(opposite_flow(self),other)
         flow(self).update(flow(other))
+        remove_if_exists(flow(self), other)
 
     def remove(self):
-        pass
+        self.next.prev = self.prev if self.prev is not None else None
+        self.prev.next = self.next if self.next is not None else None
 
     def merge(self, other):
         self.move_flows(other, attrgetter('inflow'), attrgetter('outflow'))
@@ -38,7 +39,7 @@ class Node:
 
         self.original_location.update(other.original_location)
         self.border = self.border or other.border
-  
+
         other.remove()
 
     def __str__(self):
