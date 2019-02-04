@@ -11,6 +11,9 @@ with open(path+'dem2.tif','wb') as handle:
 
 im=tiff.imread(path+'dem2.tif')
 im2 = im.astype('int32')
-print(im2.max())
-print(im2.min())
-Image.fromarray(im2,'I').show()
+print(im2.shape)
+
+i,j=3400,800
+im3 = im2[i-j:i,i-j:i]
+image = Image.fromarray(im3,'I')
+image.show()
