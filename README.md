@@ -1,5 +1,10 @@
 ### Determine where water will flow to based on height GIS data
 
+## Pictures
+
+**Sample of input data:**
+![Sample of input data](docs/sample.jpg)
+ 
 ## Method
 
 1. Load data and convert it to a 2 dimensional list of height information
@@ -26,12 +31,6 @@ Landsat 8 data from ASTGTM. 30m spaced grid of height data. [Link to dataset inf
 TODO
  -->
 
-## Pictures
-
-**Sample of input data:**
-
-![Sample of input data](docs/sample.png)
- 
 ## Tests
 
 Run the tests with `python -m unittest discover tests`
