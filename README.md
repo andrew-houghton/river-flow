@@ -43,3 +43,12 @@ Run the tests with `python -m unittest discover tests`
 * `/utils` deals with loading data, making images and preprocessing
 * `/data` holds the raw data
 
+## Todo
+
+* finish flooding tests
+* write flooding algorithm
+* code the imagewriter
+* prep a 5% size dataset sample
+* flood the dataset
+* flow the dataset
+* check the images

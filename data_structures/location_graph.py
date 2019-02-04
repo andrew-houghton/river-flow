@@ -20,3 +20,6 @@ class LocationGraph:
 
     def length(self):
         return sum(1 for x in self.ascending())
+
+    def __repr__(self):
+        return "\n"+str(list(self.ascending()))+"\n"
