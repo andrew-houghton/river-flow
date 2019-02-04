@@ -9,10 +9,10 @@
 5. For all points which touch the edge of the map/area mark them as border points
 6. Store all the nodes in a sorted linked list
 7. Flood low points;
-    * Find all the points which are below all their neighbours. These points are called lakes.
-    * For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height
-    * Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.
-    * Otherwise merge the point into the lake and raise the height of the lake to be equal to the point that was just merged into the lake. Add the neighbours of the point that is being merged into the sorted collection of lake neighbours.
+    1. Find all the points which are below all their neighbours. These points are called lakes.
+    2. For each of these lakes add all of the neighbours (the perimeter of the lake) to collection sorted by height
+    3. Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.
+    4. Otherwise merge the point into the lake and raise the height of the lake to be equal to the point that was just merged into the lake. Add the neighbours of the point that is being merged into the sorted collection of lake neighbours.
 9. Starting from the highest point send flow down to lower points
 10. Create images for each step as flow is sent down and compile into an animation
 
