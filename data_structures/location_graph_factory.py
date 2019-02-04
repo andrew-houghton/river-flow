@@ -56,43 +56,11 @@ class LocationGraphFactory:
     def connect_nodes(self):
         self.map_with_index(self.connect_node, self.node_grid)
 
-    def remove_if_exists(self, full_set, item):
-        if item in full_set:
-            full_set.remove(item)
-
-    def join_flow_sets(self, a, b):
-        # when merging inflow and outflow of the old node needs to transfer to the new node.
-
-        a.inflow.update(b.inflow)
-        a.outflow.update(b.outflow)
-        self.remove_if_exists(a.inflow, a)
-        self.remove_if_exists(a.inflow, b)
-        self.remove_if_exists(a.outflow, a)
-        self.remove_if_exists(a.outflow, b)
-
-    def remove_node(self, node):
-        if node.next is not None:
-            node.next.prev = node.prev
-        if node.prev is not None:
-            node.prev.next = node.next
-
-    def merge_pair(self, original_node, merged_node):
-        print(f"merging {merged_node.original_location} into {original_node.original_location}")
-        self.join_flow_sets(original_node, merged_node)
-        original_node.border = original_node.border or merged_node.border
-        original_node.original_location.update(merged_node.original_location)
-        self.remove_node(merged_node)
-
-
-
     def merge_equal_height_nodes(self):
         for node in self.ascending():
-            print(f'started checking {node.original_location}')
             for neighbour in node.inflow.union(node.outflow):
-                print(f'checking if {node.original_location} should be merged with {neighbour.original_location}')
                 if neighbour.altitude == node.altitude:
-                    self.merge_pair(node, neighbour)
-            print(f'finished checking {node.original_location}')
+                    node.merge(neighbour)
 
     def ascending(self):
         node = self.first
