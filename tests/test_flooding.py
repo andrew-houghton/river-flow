@@ -18,24 +18,24 @@ class TestFlooding(unittest.TestCase):
                 return True
         return False
 
-    # def test_border_exists_small(self):
-    #     graph = LocationGraph([[1, 2, 3], [1, 4, 3], [1, 2, 3]])
-    #     for node in graph.ascending():
-    #         node_touches_border = self.any_border_location(
-    #             node.original_location, 3)
-    #         self.assertEqual(node_touches_border, node.border)
+    def test_border_exists_small(self):
+        graph = LocationGraph([[1, 2, 3], [1, 4, 3], [1, 2, 3]])
+        for node in graph.ascending():
+            node_touches_border = self.any_border_location(
+                node.original_location, 3)
+            self.assertEqual(node_touches_border, node.border)
 
-    # def test_border_exists_large(self):
-    #     size = 50
-    #     graph = LocationGraph([list(range(size)) for i in range(size)])
-    #     for node in graph.ascending():
-    #         node_touches_border = self.any_border_location(
-    #             node.original_location, size)
-    #         self.assertEqual(node_touches_border, node.border)
+    def test_border_exists_large(self):
+        size = 50
+        graph = LocationGraph([list(range(size)) for i in range(size)])
+        for node in graph.ascending():
+            node_touches_border = self.any_border_location(
+                node.original_location, size)
+            self.assertEqual(node_touches_border, node.border)
 
     def test_one_point_is_flooded(self):
         graph = LocationGraph([[2,2,2],[2,1,2],[2,2,2]])
-        print(graph)
+        # print(graph)
         self.assertEqual(graph.length(), 2)
         flood(graph.ascending())
         self.assertEqual(graph.length(), 1)
