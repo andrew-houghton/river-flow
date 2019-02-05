@@ -4,9 +4,17 @@ from utils.load_data import load_data
 
 
 class TestGraph(unittest.TestCase):
+    def all_connections_both_directions(self, graph):
+        for node in graph.ascending():
+            for i in node.inflow:
+                self.assertTrue(node in i.outflow)
+            for i in node.outflow:
+                self.assertTrue(node in i.inflow)
+
     def test_create_graph(self):
         graph = LocationGraph(load_data())
         self.assertEqual(graph.length(), 4, "All items should be converted to graph")
+        self.all_connections_both_directions(graph)
 
     def test_graph_node_ordering(self):
         graph = LocationGraph(load_data())
@@ -24,9 +32,11 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(node.inflow), 0)
         self.assertEqual(len(node.outflow), 1)
         self.assertEqual(graph.first, next(iter(node.outflow)))
+        self.all_connections_both_directions(graph)
 
     def test_node_merging(self):
         graph = LocationGraph([[0.1, 0.2], [0.1, 0.3]])
+        self.all_connections_both_directions(graph)
         self.assertEqual(graph.length(), 3)
 
         node = graph.first
