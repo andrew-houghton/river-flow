@@ -42,11 +42,16 @@ class TestNodeMerging(unittest.TestCase):
 
         self.connect_in_order(a,b,c)
 
+        self.assertEqual(a.next, b)
+        self.assertEqual(b.next, c)
+        self.assertIsNone(c.next)
+
         a.merge(b)
 
         self.assertEqual(len(a.inflow), 1)
         self.assertEqual(list(a.inflow)[0], c)
+        
         self.assertEqual(a.next, c)
-        self.assertIsNone(a.prev)
         self.assertIsNone(c.next)
         self.assertEqual(c.prev, a)
+        self.assertIsNone(a.prev)
