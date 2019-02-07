@@ -4,7 +4,7 @@ from data_structures.node import Node
 
 class TestNodeMerging(unittest.TestCase):
     @staticmethod
-    def connect(a, b):
+    def set_flow(a, b):
         a.inflow.add(b)
         b.outflow.add(a)
 
@@ -23,9 +23,14 @@ class TestNodeMerging(unittest.TestCase):
 
     def test_simple_case(self):
         a, b = self.sample_node(1), self.sample_node(2)
-        self.connect(a, b)
+        self.set_flow(a, b)
         
         self.connect_in_order(a,b)
+
+        self.assertEqual(a.next,b)
+        self.assertIsNone(b.next)
+        self.assertEqual(b.prev,a)
+        self.assertIsNone(a.prev)
 
         a.merge(b)
 
@@ -37,8 +42,8 @@ class TestNodeMerging(unittest.TestCase):
     def test_moving_attached_node(self):
         a, b, c = self.sample_node(1), self.sample_node(2), self.sample_node(3)
 
-        self.connect(b, c)
-        self.connect(a, b)
+        self.set_flow(b, c)
+        self.set_flow(a, b)
 
         self.connect_in_order(a,b,c)
 

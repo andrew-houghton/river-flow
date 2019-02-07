@@ -47,6 +47,7 @@ class Node:
         other.remove()
 
     def remove(self):
+        print('remove')
         if self.prev is None:
             if self.next is None:
                 print('wat')
