@@ -45,12 +45,15 @@ class TestNodeMerging(unittest.TestCase):
         self.assertEqual(a.next, b)
         self.assertEqual(b.next, c)
         self.assertIsNone(c.next)
+        self.assertEqual(c.prev, b)
+        self.assertEqual(b.prev, a)
+        self.assertIsNone(a.prev)
 
         a.merge(b)
 
         self.assertEqual(len(a.inflow), 1)
         self.assertEqual(list(a.inflow)[0], c)
-        
+
         self.assertEqual(a.next, c)
         self.assertIsNone(c.next)
         self.assertEqual(c.prev, a)
