@@ -4,7 +4,7 @@ from operator import attrgetter
 def map_with_index(func, data):
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
 
-class LocationGraphFactory:
+class LocationGraphBuilder:
     def __init__(self, height_map):
         self.node_grid = map_with_index(self.to_node, height_map)
         map_with_index(self.set_border, self.node_grid)
