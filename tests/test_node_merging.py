@@ -10,9 +10,11 @@ class TestNodeMerging(unittest.TestCase):
 
     @staticmethod
     def sample_node(altitude):
+        coordinates = (0, altitude)
         n = Node()
         n.altitude = altitude
-        n.original_location.add((0, altitude))
+        n.starting_location = coordinates
+        n.original_location.add(coordinates)
         return n
 
     @staticmethod
@@ -24,12 +26,12 @@ class TestNodeMerging(unittest.TestCase):
     def test_simple_case(self):
         a, b = self.sample_node(1), self.sample_node(2)
         self.set_flow(a, b)
-        
-        self.connect_in_order(a,b)
 
-        self.assertEqual(a.next,b)
+        self.connect_in_order(a, b)
+
+        self.assertEqual(a.next, b)
         self.assertIsNone(b.next)
-        self.assertEqual(b.prev,a)
+        self.assertEqual(b.prev, a)
         self.assertIsNone(a.prev)
 
         a.merge(b)
@@ -45,7 +47,7 @@ class TestNodeMerging(unittest.TestCase):
         self.set_flow(b, c)
         self.set_flow(a, b)
 
-        self.connect_in_order(a,b,c)
+        self.connect_in_order(a, b, c)
 
         self.assertEqual(a.next, b)
         self.assertEqual(b.next, c)
