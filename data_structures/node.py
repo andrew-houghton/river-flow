@@ -67,11 +67,12 @@ class Node:
         self.original_location.update(other.original_location)
         self.border = self.border or other.border
 
-        if other.starting_location[0] < self.starting_location[0] or \
-            (other.starting_location[0] == self.starting_location[0] and 
-            other.starting_location[1] < self.starting_location[1]):
+        if other.starting_location[0] < self.starting_location[0]:
+            self.starting_location = other.starting_location
+        elif other.starting_location[0] == self.starting_location[0] and \
+            other.starting_location[1] < self.starting_location[1]:
             # Keep the lower index item
-            self.starting_location == other.starting_location
+            self.starting_location = other.starting_location
 
         other.remove()
 

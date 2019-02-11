@@ -8,3 +8,6 @@ venv/
 
 # Height maps
 dem*.tif
+
+# Test runner scripts
+test.sh

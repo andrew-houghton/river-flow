@@ -35,7 +35,6 @@ class TestFlooding(unittest.TestCase):
 
     def test_one_point_is_flooded(self):
         graph = LocationGraph([[2,2,2],[2,1,2],[2,2,2]])
-        # print(graph)
         self.assertEqual(graph.length(), 2)
         flood(graph.ascending())
         self.assertEqual(graph.length(), 1)
