@@ -6,6 +6,7 @@ class Node:
         self.inflow = set()  # list of nodes which can flow in to this node
         self.outflow = set()  # list of nodes which can flow out of this node
         self.original_location = set()
+        self.starting_location = None
         self.altitude = None
         self.flow = 0.0
         self.border = False
@@ -47,7 +48,6 @@ class Node:
         other.remove()
 
     def remove(self):
-        print('remove')
         if self.prev is None:
             if self.next is None:
                 print('wat')
@@ -67,6 +67,12 @@ class Node:
         self.original_location.update(other.original_location)
         self.border = self.border or other.border
 
+        if other.starting_location[0] < self.starting_location[0] or \
+            (other.starting_location[0] == self.starting_location[0] and 
+            other.starting_location[1] < self.starting_location[1]):
+            # Keep the lower index item
+            self.starting_location == other.starting_location
+
         other.remove()
 
     def __str__(self):
@@ -77,4 +83,7 @@ class Node:
         return self.__str__()
 
     def __hash__(self):
-        return hash(tuple(self.original_location))
+        return hash(self.starting_location)
+
+    def __eq__(self, other):
+        return other is not None and self.starting_location == other.starting_location

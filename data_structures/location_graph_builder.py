@@ -14,8 +14,11 @@ class LocationGraphBuilder:
 
     def to_node(self, row, col, altitude):
         node = Node()
+        coordinates = (row,col)
+        
         node.altitude = altitude
-        node.original_location.add((row, col))
+        node.original_location.add(coordinates)
+        node.starting_location = coordinates
         return node
     
     def set_border(self, i, j, node):
