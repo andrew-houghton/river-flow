@@ -21,7 +21,7 @@ class TestNodeMerging(unittest.TestCase):
     def connect_in_order(*args):
         for i in range(len(args)-1):
             args[i].next = args[i+1]
-            args[i+1].prev = args[i].next
+            args[i+1].prev = args[i]
 
     def test_simple_case(self):
         a, b = self.sample_node(1), self.sample_node(2)
@@ -52,6 +52,7 @@ class TestNodeMerging(unittest.TestCase):
         self.assertEqual(a.next, b)
         self.assertEqual(b.next, c)
         self.assertIsNone(c.next)
+
         self.assertEqual(c.prev, b)
         self.assertEqual(b.prev, a)
         self.assertIsNone(a.prev)
