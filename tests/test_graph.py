@@ -7,6 +7,11 @@ class TestGraph(unittest.TestCase):
     def all_connections_both_directions(self, graph):
         for node in graph.ascending():
             for i in node.inflow:
+                if not node in i.outflow:
+                    print(f'{node.original_location}')
+                    print(f'{i.original_location}')
+                    print(f'{node.starting_location}')
+                    print(f'{i.starting_location}')
                 self.assertTrue(node in i.outflow)
             for i in node.outflow:
                 self.assertTrue(node in i.inflow)
