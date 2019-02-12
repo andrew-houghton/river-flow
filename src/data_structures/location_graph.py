@@ -1,5 +1,6 @@
 from data_structures.location_graph_builder import LocationGraphBuilder
 
+
 class LocationGraph:
     def __init__(self, height_map):
         builder = LocationGraphBuilder(height_map)
@@ -22,4 +23,4 @@ class LocationGraph:
         return sum(1 for x in self.ascending())
 
     def __repr__(self):
-        return "\n"+str(list(self.ascending()))+"\n"
+        return "\n" + str(list(self.ascending())) + "\n"

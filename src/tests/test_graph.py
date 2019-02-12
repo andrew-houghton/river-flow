@@ -1,4 +1,5 @@
 import unittest
+
 from data_structures.location_graph import LocationGraph
 from utils.load_data import load_data
 
@@ -53,9 +54,8 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(node.outflow), 0)
 
     def test_multiple_merged_points(self):
-        graph = LocationGraph([[2,2,2],[2,1,2],[2,2,2]])
+        graph = LocationGraph([[2, 2, 2], [2, 1, 2], [2, 2, 2]])
         self.all_connections_both_directions(graph)
         self.assertEqual(graph.length(), 2)
-        self.assertEqual(graph.first.starting_location,(1,1))
-        self.assertEqual(graph.last.starting_location,(0,0))
-
+        self.assertEqual(graph.first.starting_location, (1, 1))
+        self.assertEqual(graph.last.starting_location, (0, 0))

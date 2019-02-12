@@ -1,8 +1,11 @@
-from data_structures.node import Node
 from operator import attrgetter
+
+from data_structures.node import Node
+
 
 def map_with_index(func, data):
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
+
 
 class LocationGraphBuilder:
     def __init__(self, height_map):
@@ -14,16 +17,16 @@ class LocationGraphBuilder:
 
     def to_node(self, row, col, altitude):
         node = Node()
-        coordinates = (row,col)
-        
+        coordinates = (row, col)
+
         node.altitude = altitude
         node.original_location.add(coordinates)
         node.starting_location = coordinates
         return node
-    
+
     def set_border(self, i, j, node):
         node.border = i == 0 or j == 0 or i == len(
-            self.node_grid)-1 or j == len(self.node_grid[0])-1
+            self.node_grid) - 1 or j == len(self.node_grid[0]) - 1
 
     def connect_nodes(self):
         map_with_index(self.connect_node, self.node_grid)
@@ -54,9 +57,9 @@ class LocationGraphBuilder:
 
         for i in range(len(sorted_list)):
             if i > 0:
-                sorted_list[i].prev = sorted_list[i-1]
-            if i < len(sorted_list)-1:
-                sorted_list[i].next = sorted_list[i+1]
+                sorted_list[i].prev = sorted_list[i - 1]
+            if i < len(sorted_list) - 1:
+                sorted_list[i].next = sorted_list[i + 1]
 
     def merge_equal_height_nodes(self):
         for node in self.ascending():

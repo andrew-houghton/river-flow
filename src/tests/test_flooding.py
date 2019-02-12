@@ -1,16 +1,18 @@
 import unittest
-from data_structures.location_graph import LocationGraph
+
 from algorithms.flood import flood
+from data_structures.location_graph import LocationGraph
+
 
 class TestFlooding(unittest.TestCase):
     def all_nodes_have_outflow(self, nodes):
         for node in nodes:
-            if not node.border and len(node.outflow)==0:
+            if not node.border and len(node.outflow) == 0:
                 return False
         return True
 
     def is_border_location(self, size, x, y):
-        return x == 0 or y == 0 or x == size-1 or y == size-1
+        return x == 0 or y == 0 or x == size - 1 or y == size - 1
 
     def any_border_location(self, locations, size):
         for i in locations:
@@ -34,7 +36,7 @@ class TestFlooding(unittest.TestCase):
             self.assertEqual(node_touches_border, node.border)
 
     def test_one_point_is_flooded(self):
-        graph = LocationGraph([[2,2,2],[2,1,2],[2,2,2]])
+        graph = LocationGraph([[2, 2, 2], [2, 1, 2], [2, 2, 2]])
         self.assertEqual(graph.length(), 2)
         flood(graph.ascending())
         self.assertEqual(graph.length(), 1)

@@ -1,4 +1,5 @@
 import unittest
+
 from data_structures.node import Node
 
 
@@ -19,9 +20,9 @@ class TestNodeMerging(unittest.TestCase):
 
     @staticmethod
     def connect_in_order(*args):
-        for i in range(len(args)-1):
-            args[i].next = args[i+1]
-            args[i+1].prev = args[i]
+        for i in range(len(args) - 1):
+            args[i].next = args[i + 1]
+            args[i + 1].prev = args[i]
 
     def test_simple_case(self):
         a, b = self.sample_node(1), self.sample_node(2)

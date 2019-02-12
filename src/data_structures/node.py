@@ -1,6 +1,3 @@
-from operator import attrgetter
-
-
 class Node:
     def __init__(self):
         self.inflow = set()  # list of nodes which can flow in to this node
@@ -60,7 +57,6 @@ class Node:
                 self.next.prev = self.prev
                 self.prev.next = self.next
 
-
     def merge(self, other):
         self.move_flows(other)
 
@@ -70,7 +66,7 @@ class Node:
         if other.starting_location[0] < self.starting_location[0]:
             self.starting_location = other.starting_location
         elif other.starting_location[0] == self.starting_location[0] and \
-            other.starting_location[1] < self.starting_location[1]:
+                other.starting_location[1] < self.starting_location[1]:
             # Keep the lower index item
             self.starting_location = other.starting_location
 
