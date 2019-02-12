@@ -11,3 +11,6 @@ dem*.tif
 
 # Test runner scripts
 test.sh
+
+# IDE files
+.idea
