@@ -32,8 +32,7 @@ class LocationGraphBuilder:
         map_with_index(self.connect_node, self.node_grid)
 
     def connect_node(self, row, col, item):
-        adjacent_coordinates = [
-            (row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
+        adjacent_coordinates = [(row + 1, col), (row, col + 1)]
 
         for row, col in adjacent_coordinates:
             if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
