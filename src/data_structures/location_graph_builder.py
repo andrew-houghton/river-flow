@@ -61,8 +61,15 @@ class LocationGraphBuilder:
                 sorted_list[i].next = sorted_list[i + 1]
 
     def merge_equal_height_nodes(self):
+        print("merge_equal_height_nodes")
+        l = self.last
+
         for node in self.ascending():
+            print(f"  Trying to merge {Node.num(node.starting_location)}")
+            print(f'    Last node neighbours {",".join(str(Node.num(i.starting_location)) for i in l.inflow.union(l.outflow))}')
+
             for neighbour in node.inflow.union(node.outflow):
+                print(f"    checking whether to merge with neighbour {Node.num(neighbour.starting_location)}")
                 if neighbour.altitude == node.altitude:
                     node.merge(neighbour)
 

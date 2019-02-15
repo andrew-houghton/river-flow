@@ -1,3 +1,4 @@
+
 class Node:
     def __init__(self):
         self.inflow = set()  # list of nodes which can flow in to this node
@@ -11,17 +12,33 @@ class Node:
         self.prev = None
         self._iteration_index = None
 
+    @staticmethod
+    def num(location):
+        return location[0] * 3 + location[1]
+
     def area(self):
         return len(self.original_location)
 
     def move_connections_to(self, node):
         for i in self.inflow:
+            # print(f'\t\tdisconnecting {self.num(i.starting_location)} from {self.num(self.starting_location)}')
             i.remove_outflow(self)
             i.outflow.add(node)
 
         for i in self.outflow:
+            # print(f'\t\tdisconnecting {self.num(i.starting_location)} from {self.num(self.starting_location)}')
             i.remove_inflow(self)
             i.inflow.add(node)
+
+        # Verify node is disconnected
+        for i in self.inflow:
+            if self in i.outflow:
+                # print(f'\tError: {self.num(i.starting_location)} is still connected to {self.num(self.starting_location)}')
+                assert False
+        for i in self.outflow:
+            if self in i.inflow:
+                # print(f'\tError: {self.num(i.starting_location)} is still connected to {self.num(self.starting_location)}')
+                assert False
 
     def remove_inflow(self, item):
         if item in self.inflow:
@@ -45,6 +62,7 @@ class Node:
         other.remove()
 
     def remove(self):
+
         if self.prev is None:
             if self.next is None:
                 print('wat')
@@ -58,6 +76,8 @@ class Node:
                 self.prev.next = self.next
 
     def merge(self, other):
+        print(f"      Merging {self.num(other.starting_location)} into {self.num(self.starting_location)}")
+
         self.move_flows(other)
 
         self.original_location.update(other.original_location)
@@ -70,7 +90,7 @@ class Node:
             # Keep the lower index item
             self.starting_location = other.starting_location
 
-        other.remove()
+        print(f"       {self.num(self.starting_location)} now has {','.join(str(self.num(i)) for i in self.original_location)}")
 
     def __str__(self):
         return """Node - location:{} altitude:{}""".format(
