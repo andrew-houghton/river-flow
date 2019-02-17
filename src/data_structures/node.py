@@ -61,7 +61,7 @@ class Node:
 
         if self.prev is None:
             if self.next is None:
-                print('wat')
+                pass
             else:
                 self.next.prev = None
         else:
@@ -75,20 +75,15 @@ class Node:
         if other.starting_location[0] < self.starting_location[0] or \
             (other.starting_location[0] == self.starting_location[0] and \
                 other.starting_location[1] < self.starting_location[1]):
-            print(f'        changing {self.starting_location} to be called {other.starting_location}')
             # Keep the lower index item
             self.starting_location = other.starting_location
 
     def merge(self, other):
-        print(f"      Merging {self.num(other.starting_location)} into {self.num(self.starting_location)}")
-
         self.move_flows(other)
 
         self.original_location.update(other.original_location)
         self.border = self.border or other.border
         self.update_starting_location(other)
-
-        print(f"        {self.num(self.starting_location)} now has {','.join(str(self.num(i)) for i in self.original_location)}")
 
     def __str__(self):
         return """Node - location:{} altitude:{}""".format(
