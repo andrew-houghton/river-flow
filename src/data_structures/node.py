@@ -37,6 +37,11 @@ class Node:
         # Unlink the other node from the linked list
         other._remove()
 
+        self.position.update(other.position)
+        self.is_border = self.is_border or other.is_border
+
+        # Pick lower home location
+
     def __str__(self):
         return """Node - home:{} altitude:{}""".format(self.home, self.altitude)
 

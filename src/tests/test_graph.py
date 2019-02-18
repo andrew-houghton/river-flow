@@ -44,13 +44,13 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(node.altitude, 0.1)
         self.assertEqual(node.flow, 0.0)
         self.assertEqual(node.position, {(0, 0), (1, 0)})
-        self.assertEqual(node.inflow, {node.next, node.next.next})
-        self.assertEqual(len(node.inflow), 2)
-        self.assertEqual(len(node.outflow), 0)
+        self.assertEqual(set(node.links.inflow()), {node.above, node.above.above})
+        self.assertEqual(len(list(node.links.inflow())), 2)
+        self.assertEqual(len(list(node.links.outflow())), 0)
 
     def test_multiple_merged_points(self):
         graph = LocationGraph([[2, 2, 2], [2, 1, 2], [2, 2, 2]])
         self.all_connections_both_directions(graph)
         self.assertEqual(len(graph), 2)
-        self.assertEqual(graph.highest.starting_location, (1, 1))
-        self.assertEqual(graph.lowest.starting_location, (0, 0))
+        self.assertEqual(graph.lowest.home, (1, 1))
+        self.assertEqual(graph.highest.home, (0, 0))
