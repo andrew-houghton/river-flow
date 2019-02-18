@@ -14,15 +14,13 @@ class LinkSet:
         self._add(other)
         other.links._add(self.node)
 
-    def _move_connection_to(self, origin: Node, destination: Node):
-        # origin node can't connect anymore
-        self.disconnect(origin)
-        # destination must get the connection
-        self.link(destination)
-
-    def move_all_connections_to(self, other: Node):
-        for n in self.all():
-            n.links._move_connection_to(self.node,other)
+    def move_all_connections_to(self, destination: Node):
+        while self._items:
+            # Disconnect this node
+            connected_node=self._items.pop()
+            connected_node.links._remove(self.node)
+            # Connect to other
+            connected_node.links.link(destination)
 
     def disconnect(self, other: Node):
         # disconnect this from other

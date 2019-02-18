@@ -49,7 +49,7 @@ class LocationGraphBuilder:
 
     def merge_equal_height_nodes(self):
         for node in self.ascending():
-            for neighbour in node.links.all():
+            for neighbour in list(node.links.all()):
                 if neighbour.altitude == node.altitude:
                     node.merge(neighbour)
 
