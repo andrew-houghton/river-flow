@@ -33,7 +33,7 @@ class Node:
         # Disconnect the node we are merging in
         self.links.disconnect(other)
         # Tell the node we are merging in to move it's flow to this node
-        other.links.move_flow(self)
+        other.links.move_all_connections_to(self)
         # Unlink the other node from the linked list
         other._remove()
 
