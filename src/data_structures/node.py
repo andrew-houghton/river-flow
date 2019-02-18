@@ -30,6 +30,11 @@ class Node:
                 self.below.above = self.above
 
     def merge(self, other: Node):
+        # Disconnect the node we are merging in
+        self.links.disconnect(other)
+        # Tell the node we are merging in to move it's flow to this node
+        other.links.move_flow(self)
+        # Unlink the other node from the linked list
         other._remove()
 
     def __str__(self):
