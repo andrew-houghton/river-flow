@@ -23,5 +23,5 @@ def start_flood(lake):
 def flood(nodes):
     # from lowest altitude to highest find the low points and flood them
     for node in nodes:
-        if len(node.outflow) == 0 and not node.border:
+        if len(list(node.links.outflow())) == 0 and not node.border:
             start_flood(node)
