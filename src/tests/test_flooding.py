@@ -28,10 +28,10 @@ class TestFlooding(unittest.TestCase):
 
     def test_border_exists_large(self):
         size = 50
-        graph = LocationGraph([list(range(size)) for i in range(size)])
+        graph = LocationGraph([list(range(size)) for _ in range(size)])
         for node in graph.ascending():
             node_touches_border = self.any_border_location(node.position, size)
-            self.assertEqual(node_touches_border, node.border)
+            self.assertEqual(node_touches_border, node.border, f"Node {node.home} border status should be {node_touches_border}")
 
     def test_one_point_is_flooded(self):
         graph = LocationGraph([[2, 2, 2], [2, 1, 2], [2, 2, 2]])
