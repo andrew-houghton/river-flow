@@ -53,4 +53,4 @@ class TestGraph(unittest.TestCase):
         self.all_connections_both_directions(graph)
         self.assertEqual(len(graph), 2)
         self.assertEqual(graph.lowest.home, (1, 1))
-        self.assertEqual(graph.highest.home, (0, 0))
+        self.assertNotEqual(graph.highest.home, (1, 1))
