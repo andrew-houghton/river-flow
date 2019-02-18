@@ -14,9 +14,15 @@ class LinkSet:
         self._add(other)
         other.links._add(self.node)
 
-    def move_flow(self, other: Node):
-        # move all the connections in this LinkSet to connect to other instead
-        pass
+    def _move_connection_to(self, origin: Node, destination: Node):
+        # origin node can't connect anymore
+        self.disconnect(origin)
+        # destination must get the connection
+        self.link(destination)
+
+    def move_all_connections_to(self, other: Node):
+        for n in self.all():
+            n.links._move_connection_to(self.node,other)
 
     def disconnect(self, other: Node):
         # disconnect this from other
