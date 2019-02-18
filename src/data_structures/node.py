@@ -1,9 +1,10 @@
 from __future__ import annotations
 from data_structures.linkset import LinkSet
+from typing import Set
 
 class Node:
     def __init__(self):
-        self.position: set = set()
+        self.position: Set[tuple] = set()
         self.home: tuple = None
         self.links: LinkSet = LinkSet(self)
         self.altitude: float = None

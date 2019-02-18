@@ -26,6 +26,16 @@ class LinkSet:
     def all(self) -> Set[Node]:
         return self._items
 
+    def inflow(self) -> Set[Node]:
+        for i in self.all():
+            if i.altitude > self.node.altitude:
+                yield i
+
+    def outflow(self) -> Set[Node]:
+        for i in self.all():
+            if i.altitude < self.node.altitude:
+                yield i
+
     def _remove(self, other: Node):
         self._items.remove(other)
 
