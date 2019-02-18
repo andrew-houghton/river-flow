@@ -64,7 +64,6 @@ class LocationGraphBuilder:
         print(' '.join(str(i) for i in blank[0:3]))
         print(' '.join(str(i) for i in blank[3:6]))
         print(' '.join(str(i) for i in blank[6:9]))
-        print()
 
     def print_state(self):
         blank = [0]*9
@@ -74,7 +73,12 @@ class LocationGraphBuilder:
                 blank[Node.num(j)-1] = Node.num(i.starting_location)
         self.print_array(blank)
 
+        last_node_neighbours = [str(Node.num(i.starting_location)) for i in self.last.inflow.union(self.last.outflow)]
+        print(f'Last node neighbours {",".join(last_node_neighbours)}')
+
     def merge_equal_height_nodes(self):
+        print('Initial state')
+        self.print_state()
         for node in self.ascending():
             print(f'Working on node {Node.num(node.starting_location)}')
             for neighbour in node.inflow.union(node.outflow):

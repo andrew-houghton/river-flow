@@ -21,10 +21,12 @@ class Node:
 
     def move_connections_to(self, node):
         for i in self.inflow:
+            print(f'     changing flow {self.num(i.starting_location)}->{self.num(self.starting_location)} to {self.num(node.starting_location)}')
             i.remove_outflow(self)
             i.outflow.add(node)
 
         for i in self.outflow:
+            print(f'     changing flow {self.num(i.starting_location)}->{self.num(self.starting_location)} to {self.num(node.starting_location)}')
             i.remove_inflow(self)
             i.inflow.add(node)
 
@@ -37,18 +39,20 @@ class Node:
                 assert False
 
     def remove_inflow(self, item):
-        if item in self.inflow:
-            self.inflow.remove(item)
+        self.inflow.remove(item)
 
     def remove_outflow(self, item):
-        if item in self.outflow:
-            self.outflow.remove(item)
+        self.outflow.remove(item)
 
     def move_flows(self, other):
-        other.remove_inflow(self)
-        other.remove_outflow(self)
-        self.remove_outflow(other)
-        self.remove_inflow(other)
+        if self in other.inflow:
+            other.remove_inflow(self)
+        if other in self.outflow:
+            self.remove_outflow(other)
+        if self in other.outflow:
+            other.remove_outflow(self)
+        if other in self.inflow:
+            self.remove_inflow(other)
 
         other.move_connections_to(self)
 
@@ -58,7 +62,6 @@ class Node:
         other.remove()
 
     def remove(self):
-
         if self.prev is None:
             if self.next is None:
                 pass
@@ -79,6 +82,8 @@ class Node:
             self.starting_location = other.starting_location
 
     def merge(self, other):
+        print(f'  merging {self.num(other.starting_location)} into {self.num(self.starting_location)}')
+
         self.move_flows(other)
 
         self.original_location.update(other.original_location)
