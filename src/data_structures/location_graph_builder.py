@@ -48,10 +48,13 @@ class LocationGraphBuilder:
                 sorted_list[i].above = sorted_list[i + 1]
 
     def merge_equal_height_nodes(self):
+        # start from any node
+        # use BFS to find any attached nodes
+        # merge all at once into original node
+        # move to next node until at the end of linked list
         for node in self.ascending():
-            for neighbour in list(node.links.all()):
-                if neighbour.altitude == node.altitude:
-                    node.merge(neighbour)
+            equal_height_attached_nodes = bfs(node)
+            merge(original, equal_height_attached_nodes)
 
     def ascending(self):
         node = self.lowest
