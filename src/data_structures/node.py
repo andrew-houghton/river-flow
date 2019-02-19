@@ -28,17 +28,17 @@ class Node:
         self.is_border = self.is_border or other.is_border
 
         # Pick lower home location
-        # self.home = Node._lower_home_location(self.home, other.home)
+        self.home = Node._lower_home_location(self.home, other.home)
 
-    # @staticmethod
-    # def _lower_home_location(a: tuple, b: tuple) -> tuple:
-    #     # return tuple with lowest index, by first index then second
-    #     if a[0] > b[0]:
-    #         return b
-    #     elif a[0] == b[0] and a[1]>b[1]:
-    #         return b
-    #     else:
-    #         return a
+    @staticmethod
+    def _lower_home_location(a: tuple, b: tuple) -> tuple:
+        # return tuple with lowest index, by first index then second
+        if a[0] > b[0]:
+            return b
+        elif a[0] == b[0] and a[1]>b[1]:
+            return b
+        else:
+            return a
 
     def _remove(self):
         if self.below is None:

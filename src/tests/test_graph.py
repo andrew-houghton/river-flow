@@ -54,3 +54,8 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(graph), 2)
         self.assertEqual(graph.lowest.home, (1, 1))
         self.assertNotEqual(graph.highest.home, (1, 1))
+
+    def test_4_merged_points(self):
+        graph = LocationGraph([[2, 2], [2, 2]])
+        self.all_connections_both_directions(graph)
+        self.assertEqual(len(graph), 1)
