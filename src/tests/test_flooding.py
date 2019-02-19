@@ -39,11 +39,11 @@ class TestFlooding(unittest.TestCase):
         flood(graph.ascending())
         self.assertEqual(len(graph), 1)
 
-    def test_one_lake_flooded(self):
-        pass
-
-    def test_two_lakes_flooded(self):
-        pass
-
-    def test_large_lake(self):
-        pass
+    # def test_one_lake_flooded(self):
+    #     pass
+    #
+    # def test_two_lakes_flooded(self):
+    #     pass
+    #
+    # def test_large_lake(self):
+    #     pass
