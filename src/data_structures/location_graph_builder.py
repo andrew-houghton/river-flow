@@ -64,9 +64,6 @@ class LocationGraphBuilder:
             n.remove()
             original.is_border = original.is_border or n.is_border
             original.position.update(n.position)
-
-        # the link set must connect to only the nodes which are outside of all the sets
-        for n in attached:
             original.links.update(n.links)
         original.links.disconnect_all(attached)
 
