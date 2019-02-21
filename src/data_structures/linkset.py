@@ -14,6 +14,11 @@ class LinkSet:
         self._add(other)
         other.links._add(self.node)
 
+    def disconnect(self, other: Node):
+        # disconnect this from other
+        self._remove(other)
+        other.links._remove(self.node)
+
     def move_all_connections_to(self, destination: Node):
         while self._items:
             # Disconnect this node
@@ -22,10 +27,19 @@ class LinkSet:
             # Connect to other
             connected_node.links.link(destination)
 
-    def disconnect(self, other: Node):
-        # disconnect this from other
-        self._remove(other)
-        other.links._remove(self.node)
+    def update(self, links: LinkSet):
+        for node in links.all():
+            self.link(node)
+
+    def disconnect_all(self, nodes: Set[Node]):
+        for node in nodes:
+            self.disconnect_if_connected(node)
+            if node in self._items:
+                self.disconnect(node)
+
+    def disconnect_if_connected(self, node: Node):
+        if node in self._items:
+            self.disconnect(node)
 
     def all(self) -> Set[Node]:
         return self._items
@@ -40,8 +54,16 @@ class LinkSet:
             if i.altitude < self.node.altitude:
                 yield i
 
+    def equal_height(self) -> Set[Node]:
+        for i in self.all():
+            if i.altitude == self.node.altitude:
+                yield i
+
     def _remove(self, other: Node):
+        if not other in self._items:
+            print(f"{other} not present in linkset {self._items}")
         self._items.remove(other)
 
     def _add(self, node: Node):
-        self._items.add(node)
+        if node != self.node:
+            self._items.add(node)
