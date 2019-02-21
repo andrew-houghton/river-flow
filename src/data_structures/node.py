@@ -22,7 +22,7 @@ class Node:
         # Tell the node we are merging in to move it's flow to this node
         other.links.move_all_connections_to(self)
         # Unlink the other node from the linked list
-        other._remove()
+        other.remove()
 
         self.position.update(other.position)
         self.is_border = self.is_border or other.is_border
@@ -40,7 +40,7 @@ class Node:
         else:
             return a
 
-    def _remove(self):
+    def remove(self):
         if self.below is None:
             if self.above is None:
                 pass

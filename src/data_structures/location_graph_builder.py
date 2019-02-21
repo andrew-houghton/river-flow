@@ -1,7 +1,9 @@
 from operator import attrgetter
+import collections
 
 from data_structures.node import Node
 from typing import List
+from typing import Set
 
 def map_with_index(func, data):
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
@@ -47,14 +49,31 @@ class LocationGraphBuilder:
             if i < len(sorted_list) - 1:
                 sorted_list[i].above = sorted_list[i + 1]
 
+    def bfs(self, node: Node) -> Set[Node]:
+        seen, queue = {node}, collections.deque([node])
+        while queue:
+            vertex = queue.popleft()
+            for neighbour in vertex.links.equal_height():
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    queue.append(neighbour)
+        return seen
+
+    def merge(self, original: Node, attached: Set[Node]):
+        for n in attached:
+            n.remove()
+            original.is_border = original.is_border or n.is_border
+            original.position.update(n.position)
+
+        # the link set must connect to only the nodes which are outside of all the sets
+        for n in attached:
+            original.links.update(n.links)
+        original.links.disconnect_all(attached)
+
     def merge_equal_height_nodes(self):
-        # start from any node
-        # use BFS to find any attached nodes
-        # merge all at once into original node
-        # move to next node until at the end of linked list
+        # TODO check that ascending isn't keeping reference to nodes which are gone
         for node in self.ascending():
-            equal_height_attached_nodes = bfs(node)
-            merge(original, equal_height_attached_nodes)
+            self.merge(node, self.bfs(node))
 
     def ascending(self):
         node = self.lowest
