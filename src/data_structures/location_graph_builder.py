@@ -5,11 +5,15 @@ from data_structures.node import Node
 from typing import List
 from typing import Set
 
+
 def map_with_index(func, data):
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
 
 
 class LocationGraphBuilder:
+    highest: Node
+    lowest: Node
+
     def __init__(self, height_map: List[List[float]]):
         self.node_grid = map_with_index(self.to_node, height_map)
         map_with_index(self.set_border, self.node_grid)
@@ -57,6 +61,7 @@ class LocationGraphBuilder:
                 if neighbour not in seen:
                     seen.add(neighbour)
                     queue.append(neighbour)
+        seen.remove(node)
         return seen
 
     def merge(self, original: Node, attached: Set[Node]):
@@ -70,6 +75,8 @@ class LocationGraphBuilder:
     def merge_equal_height_nodes(self):
         # TODO check that ascending isn't keeping reference to nodes which are gone
         for node in self.ascending():
+            # TODO only bfs when needed!
+            # TODO seems like original ends up detached from the rest of the graph
             self.merge(node, self.bfs(node))
 
     def ascending(self):

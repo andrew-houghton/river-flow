@@ -59,6 +59,9 @@ class LinkSet:
             if i.altitude == self.node.altitude:
                 yield i
 
+    def len_outflow(self):
+        return sum(1 for i in self.all() if i.altitude < self.node.altitude)
+
     def _remove(self, other: Node):
         if not other in self._items:
             print(f"{other} not present in linkset {self._items}")
