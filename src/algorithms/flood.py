@@ -1,11 +1,12 @@
-from sortedcollections import SortedList
+from sortedcontainers import SortedKeyList
 from data_structures.node import Node
 from typing import Iterable
 
 
 def start_flood(lake: Node):
     # add neighbours to sorted collection
-    edge_of_lake = SortedList()
+
+    edge_of_lake = SortedKeyList(key=lambda node: node.altitude)
     edge_of_lake.update(lake.links.inflow())
 
     # Once we look at an item we are done with it
