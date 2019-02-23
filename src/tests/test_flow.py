@@ -12,10 +12,12 @@ class TestFlow(unittest.TestCase):
 
     def flow(self, data):
         graph = LocationGraph(data)
+        num_points = sum([len(i) for i in data])
+        self.assertEqual(num_points, len(graph))
         writer = ImageWriter()
         writer.write = MagicMock()
         nodes_with_flow = flow(graph, writer)
-        self.assertEqual(writer.write.call_count, sum([len(i) for i in data]))
+        self.assertEqual(writer.write.call_count, num_points)
         return [i.flow for i in nodes_with_flow.ascending()]
 
     def test_1d_flow(self):

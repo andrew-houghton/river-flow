@@ -1,6 +1,7 @@
 from data_structures.location_graph_builder import LocationGraphBuilder
 from typing import List
 
+
 class LocationGraph:
     def __init__(self, height_map: List[List[float]]):
         builder = LocationGraphBuilder(height_map)
@@ -9,13 +10,13 @@ class LocationGraph:
 
     def ascending(self):
         node = self.lowest
-        while node != None:
+        while node is not None:
             yield node
             node = node.above
 
     def descending(self):
         node = self.highest
-        while node != None:
+        while node is not None:
             yield node
             node = node.below
 

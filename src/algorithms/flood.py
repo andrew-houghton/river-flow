@@ -2,6 +2,7 @@ from sortedcollections import SortedList
 from data_structures.node import Node
 from typing import Iterable
 
+
 def start_flood(lake: Node):
     # add neighbours to sorted collection
     edge_of_lake = SortedList()
