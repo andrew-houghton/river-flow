@@ -1,9 +1,9 @@
-from operator import attrgetter
 import collections
-
-from data_structures.node import Node
+from operator import attrgetter
 from typing import List
 from typing import Set
+
+from data_structures.node import Node
 
 
 def map_with_index(func, data):
