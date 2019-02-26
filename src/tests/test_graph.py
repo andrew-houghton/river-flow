@@ -59,6 +59,6 @@ class TestGraph(unittest.TestCase):
         graph = LocationGraph([[2, 2], [2, 2]])
         self.all_connections_both_directions(graph)
         self.assertEqual(len(graph), 1)
-        self.assertEqual(graph.highest,graph.lowest)
+        self.assertEqual(graph.highest, graph.lowest)
         self.assertIsNone(graph.highest.above)
         self.assertIsNone(graph.highest.below)

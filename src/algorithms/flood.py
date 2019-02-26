@@ -1,6 +1,7 @@
-from sortedcontainers import SortedKeyList
-from data_structures.node import Node
 from typing import Iterable
+
+from data_structures.node import Node
+from sortedcontainers import SortedKeyList
 
 
 def start_flood(lake: Node):

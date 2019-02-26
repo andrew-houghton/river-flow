@@ -1,8 +1,11 @@
 from __future__ import annotations
+
 from typing import Set
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from data_structures.node import Node
+
 
 class LinkSet:
     def __init__(self, node: Node):
@@ -22,7 +25,7 @@ class LinkSet:
     def move_all_connections_to(self, destination: Node):
         while self._items:
             # Disconnect this node
-            connected_node=self._items.pop()
+            connected_node = self._items.pop()
             connected_node.links._remove(self.node)
             # Connect to other
             connected_node.links.link(destination)
