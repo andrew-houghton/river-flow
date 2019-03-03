@@ -1,6 +1,9 @@
 from __future__ import annotations
-from data_structures.linkset import LinkSet
+
 from typing import Set
+
+from data_structures.linkset import LinkSet
+
 
 class Node:
     def __init__(self):
@@ -35,7 +38,7 @@ class Node:
         # return tuple with lowest index, by first index then second
         if a[0] > b[0]:
             return b
-        elif a[0] == b[0] and a[1]>b[1]:
+        elif a[0] == b[0] and a[1] > b[1]:
             return b
         else:
             return a

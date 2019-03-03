@@ -1,6 +1,6 @@
+import bz2
 import os
 
-import bz2
 import tifffile as tiff
 from PIL import Image
 
