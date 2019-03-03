@@ -11,5 +11,5 @@ def flow(graph: LocationGraph, image_writer):
 
             for i in node.links.outflow():
                 i.flow += (node.altitude - i.altitude) * node.flow / total_height_out
-        image_writer.write(graph)
+        image_writer.update(node)
     return graph

@@ -19,7 +19,6 @@ class LocationGraphBuilder:
         map_with_index(self.set_border, self.node_grid)
         map_with_index(self.connect_node, self.node_grid)
         self.make_sorted_linked_list(self.node_grid)
-        self.merge_equal_height_nodes()
 
     def to_node(self, row: int, col: int, altitude: float):
         node = Node()
