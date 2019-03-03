@@ -59,3 +59,7 @@ Run the tests with `python -m unittest discover tests`
 * flood the dataset
 * flow the dataset
 * check the images
+
+## video commands
+
+`ffmpeg -i ./%d.tiff  -c:v ffv1 -qscale:v 0 ../video/test.avi`

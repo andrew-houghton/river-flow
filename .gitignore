@@ -7,8 +7,9 @@ __pycache__/
 venv/
 
 # Height maps
-dem*.tif
-dem*.tiff
+*.tif
+*.tiff
+*.avi
 
 # Test runner scripts
 test.sh
@@ -18,3 +19,6 @@ test.sh
 
 # jupyter
 .ipynb_checkpoints
+
+# images
+data/
