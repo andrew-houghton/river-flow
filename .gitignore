@@ -8,9 +8,13 @@ venv/
 
 # Height maps
 dem*.tif
+dem*.tiff
 
 # Test runner scripts
 test.sh
 
 # IDE files
 .idea
+
+# jupyter
+.ipynb_checkpoints
