@@ -1,1 +1,5 @@
 sortedcontainers==2.1.0
+pillow
+jupyter
+numpy
+IPython
