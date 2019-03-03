@@ -1,5 +1,6 @@
-from data_structures.location_graph_builder import LocationGraphBuilder
 from typing import List
+
+from data_structures.location_graph_builder import LocationGraphBuilder
 
 
 class LocationGraph:

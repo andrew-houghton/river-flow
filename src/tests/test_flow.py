@@ -1,8 +1,8 @@
 import unittest
+from unittest.mock import MagicMock
 
 from algorithms.flow import flow
 from data_structures.location_graph import LocationGraph
-from unittest.mock import MagicMock
 from utils.image_writer import ImageWriter
 
 
