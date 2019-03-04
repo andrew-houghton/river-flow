@@ -22,10 +22,8 @@ class LocationGraphBuilder:
 
     def to_node(self, row: int, col: int, altitude: float):
         node = Node()
-        coordinates = (row, col)
         node.altitude = altitude
-        node.position.add(coordinates)
-        node.home = coordinates
+        node.home = (row, col)
         return node
 
     def set_border(self, i: int, j: int, node: Node):
@@ -51,35 +49,3 @@ class LocationGraphBuilder:
                 sorted_list[i].below = sorted_list[i - 1]
             if i < len(sorted_list) - 1:
                 sorted_list[i].above = sorted_list[i + 1]
-
-    def bfs(self, node: Node) -> Set[Node]:
-        seen, queue = {node}, collections.deque([node])
-        while queue:
-            vertex = queue.popleft()
-            for neighbour in vertex.links.equal_height():
-                if neighbour not in seen:
-                    seen.add(neighbour)
-                    queue.append(neighbour)
-        seen.remove(node)
-        return seen
-
-    def merge(self, original: Node, attached: Set[Node]):
-        for n in attached:
-            n.remove()
-            original.is_border = original.is_border or n.is_border
-            original.position.update(n.position)
-            original.links.update(n.links)
-        original.links.disconnect_all(attached)
-
-    def merge_equal_height_nodes(self):
-        # TODO check that ascending isn't keeping reference to nodes which are gone
-        for node in self.ascending():
-            # TODO only bfs when needed!
-            # TODO seems like original ends up detached from the rest of the graph
-            self.merge(node, self.bfs(node))
-
-    def ascending(self):
-        node = self.lowest
-        while node != None:
-            yield node
-            node = node.above
