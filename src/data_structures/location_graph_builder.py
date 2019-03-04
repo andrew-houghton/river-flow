@@ -2,12 +2,13 @@ import collections
 from operator import attrgetter
 from typing import List
 from typing import Set
-
 from data_structures.node import Node
+from tqdm import tqdm_notebook as tqdm
 
 
-def map_with_index(func, data):
-    return [[func(i, j, item) for j, item in enumerate(row)] for i, row in enumerate(data)]
+def map_with_index(func, data, desc=None):
+    it = enumerate(tqdm(data, desc=desc, unit="nodes"))
+    return [[func(i, j, item) for j, item in enumerate(row)] for i, row in it]
 
 
 class LocationGraphBuilder:
@@ -15,9 +16,9 @@ class LocationGraphBuilder:
     lowest: Node
 
     def __init__(self, height_map: List[List[float]]):
-        self.node_grid = map_with_index(self.to_node, height_map)
-        map_with_index(self.set_border, self.node_grid)
-        map_with_index(self.connect_node, self.node_grid)
+        self.node_grid = map_with_index(self.to_node, height_map, "Creating nodes")
+        map_with_index(self.set_border, self.node_grid, "Setting border")
+        map_with_index(self.connect_node, self.node_grid, "Connecting nodes")
         self.make_sorted_linked_list(self.node_grid)
 
     def to_node(self, row: int, col: int, altitude: float):
@@ -39,11 +40,13 @@ class LocationGraphBuilder:
                 item.links.link(neighbour)
 
     def make_sorted_linked_list(self, list_of_lists: List[List[Node]]):
+        print("Sorting nodes")
         sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
 
         self.lowest = sorted_list[0]
         self.highest = sorted_list[-1]
 
+        print("Building linked list")
         for i in range(len(sorted_list)):
             if i > 0:
                 sorted_list[i].below = sorted_list[i - 1]
