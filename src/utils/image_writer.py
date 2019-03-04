@@ -9,7 +9,7 @@ class ImageWriter(object):
         print(f"Writer will save images to {path}")
         self.write_path = path
         self.index = 0
-        self.image = Img.new('L', (size, size))
+        self.image = Img.new('RGB', (size, size))
         self.pixels = self.image.load()
         self.save_frequency=save_frequency
         self.image_number = 0
@@ -19,7 +19,9 @@ class ImageWriter(object):
 
     def update(self, node):
         self.index += 1
-        self.pixels[node.home[0],node.home[1]] = self.colour_function(node.flow)
+        node_colour = self.colour_function(node.flow)
+        self.pixels[node.home[0],node.home[1]] = node_colour
+        
         if self.index % self.save_frequency == 0:
             filename = f"{self.write_path}{self.image_number}.tiff"
             (self.image).save(filename)
