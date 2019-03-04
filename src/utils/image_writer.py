@@ -25,8 +25,4 @@ class ImageWriter(object):
         if self.index % self.save_frequency == 0:
             filename = f"{self.write_path}{self.image_number}.tiff"
             (self.image).save(filename)
-            percent_finished = int(self.index*100/self.size**2)
-            if percent_finished != self.previous_percent and percent_finished%2==0:
-                print(f'Processed {percent_finished}% of {self.size**2} images.')
-                self.previous_percent = percent_finished
             self.image_number += 1
