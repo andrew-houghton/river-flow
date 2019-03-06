@@ -52,13 +52,12 @@ Run the tests with `python -m unittest discover tests`
 
 ## Todo
 
-* finish flooding tests
-* write flooding algorithm
-* code the imagewriter
-* prep a 5% size dataset sample
-* flood the dataset
-* flow the dataset
-* check the images
+- Clean up the jupyter notebook as much as possible
+    - move image loading out
+    - move colouring out
+- Allow rectangular plots
+- Automate ffmpeg
+
 
 ## video commands
 

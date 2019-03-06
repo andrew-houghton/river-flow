@@ -1,6 +1,7 @@
 import os
 from PIL import Image as Img
 
+
 class ImageWriter(object):
     def __init__(self, size, save_frequency, job_name, colour_function):
         path = f"{os.path.dirname(os.path.dirname(os.path.abspath('')))}/data/{job_name}/"
@@ -9,7 +10,7 @@ class ImageWriter(object):
         print(f"Writer will save images to {path}")
         self.write_path = path
         self.index = 0
-        self.image = Img.new('RGB', (size, size))
+        self.image = Img.new('RGB', size)
         self.pixels = self.image.load()
         self.save_frequency=save_frequency
         self.image_number = 0
