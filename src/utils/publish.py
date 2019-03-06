@@ -1,10 +1,14 @@
 import ffmpeg
 import os
+from PIL import Image as Img
+from IPython.core.display import display
+import numpy as np
 
+
+out_folder = f"{os.path.dirname(os.path.dirname(os.path.abspath('')))}/data/video/"
 
 def make_video(job_name, file_format='avi', quality=3):
     images_folder = f"{os.path.dirname(os.path.dirname(os.path.abspath('')))}/data/{job_name}/"
-    out_folder = f"{os.path.dirname(os.path.dirname(os.path.abspath('')))}/data/video/"
     video_filename = f'{out_folder}{job_name}.{file_format}'
 
     (
@@ -15,3 +19,9 @@ def make_video(job_name, file_format='avi', quality=3):
         .run()
     )
     print(f"Saved video to video_filename")
+
+def make_image(job_name, heights):
+    data = heights.astype(np.float64) / heights.max()
+    data = 255 * data
+    im = Img.fromarray(data.astype(np.uint8))
+    im.save(f'{out_folder}{job_name}.png')
