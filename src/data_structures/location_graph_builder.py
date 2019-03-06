@@ -7,7 +7,7 @@ from tqdm import tqdm_notebook as tqdm
 
 
 def map_with_index(func, data, desc=None):
-    it = enumerate(tqdm(data, desc=desc, unit="nodes"))
+    it = enumerate(tqdm(data, desc=desc, unit="nodes", miniters=1))
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in it]
 
 

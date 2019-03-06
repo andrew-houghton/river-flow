@@ -3,3 +3,4 @@ pillow
 jupyter
 numpy
 IPython
+ffmpeg-python
