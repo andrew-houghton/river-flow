@@ -24,6 +24,6 @@ class ImageWriter(object):
         self.pixels[node.home[0],node.home[1]] = node_colour
         
         if self.index % self.save_frequency == 0:
-            filename = f"{self.write_path}{self.image_number}.tiff"
+            filename = f"{self.write_path}{self.image_number:03}.tiff"
             (self.image).save(filename)
             self.image_number += 1
