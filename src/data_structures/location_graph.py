@@ -1,10 +1,12 @@
 from typing import List
-
 from data_structures.location_graph_builder import LocationGraphBuilder
 
 
 class LocationGraph:
     def __init__(self, height_map: List[List[float]]):
+        print("Creating graph")
+        self.height = len(height_map)
+        self.width = len(height_map[0])
         builder = LocationGraphBuilder(height_map)
         self.lowest = builder.lowest
         self.highest = builder.highest

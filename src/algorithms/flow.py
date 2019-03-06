@@ -1,8 +1,9 @@
-from data_structures.location_graph import LocationGraph
+from tqdm import tqdm_notebook as tqdm
 
 
-def flow(graph: LocationGraph, image_writer):
-    for node in graph.descending():
+def flow(graph, image_writer, size):
+    print("Running flow simulation")
+    for node in tqdm(graph.descending(), total=size[0]*size[1], unit=" nodes"):
         node.flow += node.area()
         if node.links.len_outflow() > 0 and not node.border:
             total_height_out = 0.0
