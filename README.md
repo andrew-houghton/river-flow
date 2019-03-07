@@ -52,12 +52,9 @@ Run the tests with `python -m unittest discover tests`
 
 ## Todo
 
-- Clean up the jupyter notebook as much as possible
-    - move image loading out
-    - move colouring out
-- Allow rectangular plots
-- Automate ffmpeg
-
+- Speed up graph creation
+- Write first and last frames to file
+- Merge equal height nodes (The arch nemesis!)
 
 ## video commands
 
