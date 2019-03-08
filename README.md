@@ -33,12 +33,6 @@
 
 Landsat 8 data from ASTGTM. 30m spaced grid of height data. [Link to dataset info.](https://lpdaac.usgs.gov/dataset_discovery/aster/aster_products_table/astgtm)
 
-<!--
-# Instructions for running
-
-TODO
- -->
-
 ## Tests
 
 Run the tests with `python -m unittest discover tests`
@@ -52,12 +46,9 @@ Run the tests with `python -m unittest discover tests`
 
 ## Todo
 
-- Clean up the jupyter notebook as much as possible
-    - move image loading out
-    - move colouring out
-- Allow rectangular plots
-- Automate ffmpeg
-
+- Speed up graph creation
+- Write first and last frames to file
+- Merge equal height nodes (The arch nemesis!)
 
 ## video commands
 
