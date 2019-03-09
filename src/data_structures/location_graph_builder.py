@@ -41,7 +41,16 @@ class LocationGraphBuilder:
         for row, col in adjacent_coordinates:
             if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
                 neighbour = self.node_grid[row][col]
-                item.links.link(neighbour)
+                
+                # used for bfs node merging
+                neighbour.touches.append(item)
+                item.touches.append(neighbour)
+
+                # used for flow simulation
+                if neighbour.altitude < item.altitude:
+                    item.outflow.append(neighbour)
+                elif neighbour.altitude > item.altitude:
+                    neighbour.outflow.append(item)
 
     def make_sorted_linked_list(self, list_of_lists: List[List[Node]]):
         print("Sorting nodes")

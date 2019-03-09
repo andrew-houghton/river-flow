@@ -2,13 +2,11 @@ from __future__ import annotations
 
 from typing import Set
 
-from data_structures.linkset import LinkSet
-
-
 class Node:
     def __init__(self):
         self.home: tuple = None
-        self.links: LinkSet = LinkSet(self)
+        self.touches = []
+        self.outflow = []
         self.altitude: float = None
         self.flow: float = 0.0
         self.is_border: bool = False
