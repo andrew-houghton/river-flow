@@ -37,7 +37,7 @@ class LocationGraphBuilder:
         return node
 
     def set_border(self, i: int, j: int, node: Node):
-        node.border = i == 0 or j == 0 or i == len(
+        node.is_border = i == 0 or j == 0 or i == len(
             self.node_grid) - 1 or j == len(self.node_grid[0]) - 1
 
     def connect_node(self, row: int, col: int, item: Node):
@@ -101,6 +101,7 @@ class LocationGraphBuilder:
         for node in nodes:
             del node.deleted
             del node.touches
+            del node.home
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
