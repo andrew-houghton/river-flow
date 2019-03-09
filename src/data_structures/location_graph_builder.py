@@ -23,12 +23,16 @@ class LocationGraphBuilder:
         self.node_grid = map_with_index(self.to_node, height_map, "Creating nodes")
         map_with_index(self.set_border, self.node_grid, "Setting border")
         map_with_index(self.connect_node, self.node_grid, "Connecting nodes")
-        self.make_sorted_linked_list(self.node_grid)
+        self.merge_equal_height_nodes(self.node_grid)
+        nodes = self.make_clean_node_list(self.node_grid)
+        self.make_sorted_linked_list(nodes)
 
     def to_node(self, row: int, col: int, altitude: float):
         node = Node()
         node.altitude = altitude
         node.home = (row, col)
+        node.position = {(row, col)}
+        node.deleted = False
         return node
 
     def set_border(self, i: int, j: int, node: Node):
@@ -52,9 +56,54 @@ class LocationGraphBuilder:
                 elif neighbour.altitude > item.altitude:
                     neighbour.outflow.append(item)
 
-    def make_sorted_linked_list(self, list_of_lists: List[List[Node]]):
+    def bfs(self, node: Node) -> Set[Node]:
+        seen, queue = {node}, collections.deque([node])
+        while queue:
+            vertex = queue.popleft()
+            equal_height_neighbours = [i for i in vertex.touches if i.altitude == vertex.altitude]
+            for neighbour in equal_height_neighbours:
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    queue.append(neighbour)
+        seen.remove(node)
+        return seen
+
+    def merge(self, original: Node, attached: Set[Node]):
+        # border attribute shuold be on if any are borders
+        original.is_border = any([i.is_border for i in attached])
+
+        # position should cover all attached
+        original.position = set([i.home for i in attached])
+
+        # final outflow is the outflow for all nodes except outflows to itself
+        all_possible_outflows = [j for j in i.outflow if j not in original.position for i in attached]
+        original.outflow = all_possible_outflows
+
+        # all nodes in attached should be removed from grid
+        for i in attached:
+            if i.home != original.home:
+                i.deleted = True
+
+    def merge_equal_height_nodes(self, node_grid):
+        print("Merging equal height nodes")
+        # TODO tqdm this loop
+        for row in node_grid:
+            for node in row:
+                if not node.deleted:
+                    if len([i for i in node.outflow if i.altitude == node.altitude]) > 0:
+                        attached_nodes = self.bfs(node)
+                        self.merge(node, attached_nodes)
+
+    def make_clean_node_list(self, node_grid):
+        nodes = [i for i in sum(node_grid, []) if not i.deleted]
+        for node in nodes:
+            del node.deleted
+            del node.touches
+        return nodes
+
+    def make_sorted_linked_list(self, nodes: List[Node]):
         print("Sorting nodes")
-        sorted_list = sorted(sum(list_of_lists, []), key=attrgetter('altitude'))
+        sorted_list = sorted(nodes, key=attrgetter('altitude'))
 
         self.lowest = sorted_list[0]
         self.highest = sorted_list[-1]
