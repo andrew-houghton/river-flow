@@ -1,7 +1,12 @@
 import unittest
-
 from data_structures.location_graph import LocationGraph
-from utils.load_data import load_data
+
+
+def load_data():
+    return [
+        [0.1,0.2],
+        [0.3,0.4]
+    ]
 
 
 class TestGraph(unittest.TestCase):

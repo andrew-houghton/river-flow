@@ -1,9 +1,14 @@
 from tqdm import tqdm_notebook as tqdm
 
 
-def flow(graph, image_writer, size):
+def flow(graph, image_writer, size=(0,0), progress_bar=False):
     print("Running flow simulation")
-    for node in tqdm(graph.descending(), total=size[0]*size[1], unit=" nodes"):
+    if progress_bar:
+        it = tqdm(graph.descending(), total=size[0]*size[1], unit=" nodes")
+    else:
+        it = graph.descending()
+    
+    for node in it:
         node.flow += node.area()
         if node.links.len_outflow() > 0 and not node.border:
             total_height_out = 0.0

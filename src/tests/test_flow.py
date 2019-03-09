@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 from algorithms.flow import flow
 from data_structures.location_graph import LocationGraph
-from utils.image_writer import ImageWriter
+from utils.dummy_writer import DummyWriter
 
 
 class TestFlow(unittest.TestCase):
@@ -14,10 +14,10 @@ class TestFlow(unittest.TestCase):
         graph = LocationGraph(data)
         num_points = sum([len(i) for i in data])
         self.assertEqual(num_points, len(graph))
-        writer = ImageWriter()
-        writer.write = MagicMock()
+        writer = DummyWriter()
+        writer.update = MagicMock()
         nodes_with_flow = flow(graph, writer)
-        self.assertEqual(writer.write.call_count, num_points)
+        self.assertEqual(writer.update.call_count, num_points)
         return [i.flow for i in nodes_with_flow.ascending()]
 
     def test_1d_flow(self):

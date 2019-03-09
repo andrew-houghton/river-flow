@@ -6,8 +6,12 @@ from data_structures.node import Node
 from tqdm import tqdm_notebook as tqdm
 
 
-def map_with_index(func, data, desc=None):
-    it = enumerate(tqdm(data, desc=desc, unit="nodes", miniters=1))
+def map_with_index(func, data, desc=None, progress_bar=False):
+    if progress_bar:
+        it = enumerate(tqdm(data, desc=desc, unit="nodes", miniters=1))
+    else:
+        it = enumerate(data)
+
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in it]
 
 
