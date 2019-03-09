@@ -20,6 +20,7 @@ class LocationGraphBuilder:
     lowest: Node
 
     def __init__(self, height_map: List[List[float]]):
+        # print("Creating graph")
         self.node_grid = map_with_index(self.to_node, height_map, "Creating nodes")
         map_with_index(self.set_border, self.node_grid, "Setting border")
         map_with_index(self.connect_node, self.node_grid, "Connecting nodes")
@@ -65,7 +66,6 @@ class LocationGraphBuilder:
                 if neighbour not in seen:
                     seen.add(neighbour)
                     queue.append(neighbour)
-        seen.remove(node)
         return seen
 
     def merge(self, original: Node, attached: Set[Node]):
@@ -76,7 +76,9 @@ class LocationGraphBuilder:
         original.position = set([i.home for i in attached])
 
         # final outflow is the outflow for all nodes except outflows to itself
-        all_possible_outflows = [j for j in i.outflow if j not in original.position for i in attached]
+        all_possible_outflows = []
+        for i in attached:
+            all_possible_outflows += [j for j in i.outflow if j.home not in original.position]
         original.outflow = all_possible_outflows
 
         # all nodes in attached should be removed from grid
@@ -85,12 +87,12 @@ class LocationGraphBuilder:
                 i.deleted = True
 
     def merge_equal_height_nodes(self, node_grid):
-        print("Merging equal height nodes")
+        # print("Merging equal height nodes")
         # TODO tqdm this loop
         for row in node_grid:
             for node in row:
                 if not node.deleted:
-                    if len([i for i in node.outflow if i.altitude == node.altitude]) > 0:
+                    if len([i for i in node.touches if i.altitude == node.altitude]) > 0:
                         attached_nodes = self.bfs(node)
                         self.merge(node, attached_nodes)
 
@@ -102,13 +104,13 @@ class LocationGraphBuilder:
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
-        print("Sorting nodes")
+        # print("Sorting nodes")
         sorted_list = sorted(nodes, key=attrgetter('altitude'))
 
         self.lowest = sorted_list[0]
         self.highest = sorted_list[-1]
 
-        print("Building linked list")
+        # print("Building linked list")
         for i in range(len(sorted_list)):
             if i > 0:
                 sorted_list[i].below = sorted_list[i - 1]

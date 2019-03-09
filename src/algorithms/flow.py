@@ -2,7 +2,7 @@ from tqdm import tqdm_notebook as tqdm
 
 
 def flow(graph, image_writer, size=(0,0), progress_bar=False):
-    print("Running flow simulation")
+    # print("Running flow simulation")
     if progress_bar:
         it = tqdm(graph.descending(), total=size[0]*size[1], unit=" nodes")
     else:
