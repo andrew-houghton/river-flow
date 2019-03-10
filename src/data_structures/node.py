@@ -4,7 +4,6 @@ from typing import Set
 
 class Node:
     def __init__(self):
-        self.home: tuple = None
         self.touches = []
         self.outflow = []
         self.altitude: float = None
@@ -17,7 +16,7 @@ class Node:
         return 1
 
     def __str__(self):
-        return """Node - home:{} altitude:{}""".format(self.home, self.altitude)
+        return """Node - position:{} altitude:{}""".format(self.position, self.altitude)
 
     def __repr__(self):
         return self.__str__()

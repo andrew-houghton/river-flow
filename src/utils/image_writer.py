@@ -21,7 +21,9 @@ class ImageWriter(object):
     def update(self, node):
         self.index += 1
         node_colour = self.colour_function(node.flow)
-        self.pixels[node.home[0],node.home[1]] = node_colour
+
+        for i in node.position:
+            self.pixels[i[0],i[1]] = node_colour
         
         if self.index % self.save_frequency == 0:
             filename = f"{self.write_path}{self.image_number:03}.tiff"

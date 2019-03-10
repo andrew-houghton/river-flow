@@ -14,6 +14,9 @@ def map_with_index(func, data, desc=None, progress_bar=False):
 
     return [[func(i, j, item) for j, item in enumerate(row)] for i, row in it]
 
+def overlaps(a, b):
+    return len(a.intersection(b)) > 0
+
 
 class LocationGraphBuilder:
     highest: Node
@@ -31,7 +34,6 @@ class LocationGraphBuilder:
     def to_node(self, row: int, col: int, altitude: float):
         node = Node()
         node.altitude = altitude
-        node.home = (row, col)
         node.position = {(row, col)}
         node.deleted = False
         return node
@@ -72,19 +74,24 @@ class LocationGraphBuilder:
         # border attribute shuold be on if any are borders
         original.is_border = any([i.is_border for i in attached])
 
+        # all nodes in attached should be removed from grid
+        for i in attached:
+            if i.position != original.position:
+                i.deleted = True
+
         # position should cover all attached
-        original.position = set([i.home for i in attached])
+        original.position = set.union(*[i.position for i in attached])
 
         # final outflow is the outflow for all nodes except outflows to itself
         all_possible_outflows = []
         for i in attached:
-            all_possible_outflows += [j for j in i.outflow if j.home not in original.position]
+            for j in i.outflow:
+                if not overlaps(j.position, original.position):
+                    all_possible_outflows.append(j)
+            # all_possible_outflows += [j for j in i.outflow if j.position not in original.position]
+
         original.outflow = all_possible_outflows
 
-        # all nodes in attached should be removed from grid
-        for i in attached:
-            if i.home != original.home:
-                i.deleted = True
 
     def merge_equal_height_nodes(self, node_grid):
         # print("Merging equal height nodes")
@@ -101,7 +108,6 @@ class LocationGraphBuilder:
         for node in nodes:
             del node.deleted
             del node.touches
-            del node.home
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
