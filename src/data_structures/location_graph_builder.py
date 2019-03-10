@@ -6,7 +6,7 @@ from data_structures.node import Node
 from tqdm import tqdm_notebook as tqdm
 
 
-def map_with_index(func, data, desc=None, progress_bar=False):
+def map_with_index(func, data, desc=None, progress_bar=True):
     if progress_bar:
         it = enumerate(tqdm(data, desc=desc, unit="nodes", miniters=1))
     else:
@@ -23,7 +23,7 @@ class LocationGraphBuilder:
     lowest: Node
 
     def __init__(self, height_map: List[List[float]]):
-        # print("Creating graph")
+        print("Creating graph")
         self.node_grid = map_with_index(self.to_node, height_map, "Creating nodes")
         map_with_index(self.set_border, self.node_grid, "Setting border")
         map_with_index(self.connect_node, self.node_grid, "Connecting nodes")
@@ -87,14 +87,14 @@ class LocationGraphBuilder:
         for i in attached:
             for j in i.outflow:
                 if not overlaps(j.position, original.position):
-                    all_possible_outflows.append(j)
-            # all_possible_outflows += [j for j in i.outflow if j.position not in original.position]
+                    if not any([overlaps(j.position, k.position) for k in all_possible_outflows]):
+                        all_possible_outflows.append(j)
 
         original.outflow = all_possible_outflows
 
 
     def merge_equal_height_nodes(self, node_grid):
-        # print("Merging equal height nodes")
+        print("Merging equal height nodes")
         # TODO tqdm this loop
         for row in node_grid:
             for node in row:
@@ -111,7 +111,7 @@ class LocationGraphBuilder:
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
-        # print("Sorting nodes")
+        print("Sorting nodes")
         sorted_list = sorted(nodes, key=attrgetter('altitude'))
 
         self.lowest = sorted_list[0]

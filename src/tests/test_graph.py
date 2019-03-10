@@ -69,7 +69,6 @@ class TestGraph(unittest.TestCase):
             {(0,0),(0,1),(0,2),(1,0),(1,2),(2,0),(2,1),(2,2)}
             )
         self.assertEqual(top.altitude, 2)
-        print(top.outflow)
         self.assertEqual(len(top.outflow), 1)
         self.assertEqual(top.is_border, True)
 
@@ -77,7 +76,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(bottom.position, {(1, 1)})
         self.assertEqual(bottom.altitude, 1)
         self.assertEqual(len(bottom.outflow), 0)
-        self.assertEqual(top.is_border, False)
+        self.assertEqual(bottom.is_border, False)
         
 
     def test_4_merged_points(self):
