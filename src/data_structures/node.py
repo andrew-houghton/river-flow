@@ -11,9 +11,10 @@ class Node:
         self.is_border: bool = False
         self.above: Node = None
         self.below: Node = None
+        self.position: set = None
 
     def area(self) -> int:
-        return 1
+        return len(self.position)
 
     def __str__(self):
         return """Node - position:{} altitude:{}""".format(self.position, self.altitude)
