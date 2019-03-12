@@ -20,5 +20,6 @@ class ConstWriter(object):
             self.pixels[i[0],i[1]] = node_colour
 
     def save(self):
-            filename = f"{self.write_path}{self.job_name}.tiff"
-            (self.image).save(filename)
+        filepath = f"{self.write_path}{self.job_name}.tiff"
+        (self.image).save(filepath)
+        print(f"Saved const writer image to {image_filepath}")
