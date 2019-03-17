@@ -4,15 +4,15 @@
 
 **Sample of input height map data:**
 
-![Sample of input data](docs/altitude.jpg)
-
-**Visualization of areas which get merged:**
-
-![Sample of input data](docs/merged.jpg)
+![Sample of input data](docs/altitude.png)
 
 **Visualization of flow:**
 
 ![flow visualization](docs/out.gif)
+
+**Visualization of equal height areas being merged into single points:**
+
+![Sample of input data](docs/merged.jpg)
 
 ## Usage
 
