@@ -22,4 +22,4 @@ class ConstWriter(object):
     def save(self):
         filepath = f"{self.write_path}{self.job_name}.tiff"
         (self.image).save(filepath)
-        print(f"Saved const writer image to {image_filepath}")
+        print(f"Saved const writer image to {filepath}")

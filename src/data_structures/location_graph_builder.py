@@ -43,7 +43,12 @@ class LocationGraphBuilder:
             self.node_grid) - 1 or j == len(self.node_grid[0]) - 1
 
     def connect_node(self, row: int, col: int, item: Node):
-        adjacent_coordinates = [(row + 1, col), (row, col + 1)]
+        adjacent_coordinates = [
+            (row + 1, col),
+            (row, col + 1),
+            (row + 1, col - 1),
+            (row + 1, col + 1)
+        ]
 
         for row, col in adjacent_coordinates:
             if 0 <= row < len(self.node_grid) and 0 <= col < len(self.node_grid[0]):
@@ -59,7 +64,8 @@ class LocationGraphBuilder:
                 elif neighbour.altitude > item.altitude:
                     neighbour.outflow.append(item)
 
-    def bfs(self, node: Node) -> Set[Node]:
+    def find_attached_equal_height_nodes(self, node: Node) -> Set[Node]:
+        # Breadth first search
         seen, queue = {node}, collections.deque([node])
         while queue:
             vertex = queue.popleft()
@@ -70,7 +76,7 @@ class LocationGraphBuilder:
                     queue.append(neighbour)
         return seen
 
-    def merge(self, original: Node, attached: Set[Node]):
+    def merge_node_set_into_node(self, original: Node, attached: Set[Node]):
         # border attribute shuold be on if any are borders
         original.is_border = any([i.is_border for i in attached])
 
@@ -99,9 +105,10 @@ class LocationGraphBuilder:
         for row in node_grid:
             for node in row:
                 if not node.deleted:
-                    if len([i for i in node.touches if i.altitude == node.altitude]) > 0:
-                        attached_nodes = self.bfs(node)
-                        self.merge(node, attached_nodes)
+                    num_equal_height_neighbours = len([i for i in node.touches if i.altitude == node.altitude])
+                    if num_equal_height_neighbours > 0:
+                        attached_nodes = self.find_attached_equal_height_nodes(node)
+                        self.merge_node_set_into_node(node, attached_nodes)
 
     def make_clean_node_list(self, node_grid):
         nodes = [i for i in sum(node_grid, []) if not i.deleted]

@@ -22,8 +22,9 @@ def make_video(job_name, file_format='avi', quality=3):
 
 def make_image(job_name, heights):
     images_folder = f"{os.path.dirname(os.path.dirname(os.path.abspath('')))}/data/{job_name}/"
-
-    data = heights.astype(np.float64) / heights.max()
+    data = heights.astype(np.float64)
+    data = data - data.min()
+    data = data / heights.max()
     data = 255 * data
     data = data.astype(np.uint8)
     data = np.fliplr(data)
