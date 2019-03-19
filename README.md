@@ -55,6 +55,18 @@ nding altitude order and display the flow as an animation.
 3. Starting from the lowest neighbour check if it is below the level of the lake. If it is then the flooding is complete.
 4. Otherwise merge the node into the lake and raise the height of the lake to be equal to the node that was just merged into the lake. Add the neighbours of the node that is being merged into the sorted collection of lake neighbours.
 
+Need new algorithm which only alters the grid once.
+
+1. Start by creating inflow list for each node
+2. Find points with no outflow
+3. Create a list of points which will represet the points that are being flooded
+4. Work through the inflow of each point, checking that the point doesn't already exist in the list of flooded points.
+5. Insert points into the colelction.
+6. Also store which points have not had their neighbours checked?
+7. Alter the graph to merge all the points into one.
+
+Note: figure out if therer is a valid time to flood a region and finish with multiple outflows.
+
 ## Data
 
 Landsat 8 data from ASTGTM. 30m spaced grid of height data. [Link to dataset info.](https://lpdaac.usgs.gov/dataset_discovery/aster/aster_products_table/astgtm)
