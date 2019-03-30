@@ -18,6 +18,12 @@ class ImageWriter(object):
         self.previous_percent = 0
         self.colour_function = colour_function
 
+    def __enter__(self):
+        self._save()
+    
+    def __exit__(self):
+        self._save()
+
     def update(self, node):
         self.index += 1
         node_colour = self.colour_function(node.flow)
@@ -26,6 +32,10 @@ class ImageWriter(object):
             self.pixels[i[0],i[1]] = node_colour
         
         if self.index % self.save_frequency == 0:
-            filename = f"{self.write_path}{self.image_number:03}.tiff"
-            (self.image).save(filename)
-            self.image_number += 1
+            self._save()
+
+    def _save(self):
+        filename = f"{self.write_path}{self.image_number:03}.tiff"
+        (self.image).save(filename)
+        self.image_number += 1
+

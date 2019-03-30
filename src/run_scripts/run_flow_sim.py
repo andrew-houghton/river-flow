@@ -29,10 +29,10 @@ graph = LocationGraph(height_map)
 nodes_with_flow = flow(graph, DummyWriter(), size)
 
 flows = [n.flow for n in nodes_with_flow.ascending()]
-imgWriter = ImageWriter(size, frequency, job_name, get_colour_function(flows))
 
-for node in tqdm(graph.descending(), total=len(graph), unit=" nodes"):
-    imgWriter.update(node)
+with ImageWriter(size, frequency, job_name, get_colour_function(flows)) as imgWriter:
+    for node in tqdm(graph.descending(), total=len(graph), unit=" nodes"):
+        imgWriter.update(node)
 
 make_video(job_name, quality=1)
 make_image(job_name, load_and_crop_data(size, offset))

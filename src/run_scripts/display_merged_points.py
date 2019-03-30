@@ -26,6 +26,7 @@ graph = LocationGraph(height_map)
 
 def colour_func(num_points):
     return (0,0, min(num_points*20-20,255))
+
 constWriter = ConstWriter(size, job_name, colour_func)
 
 for node in tqdm(graph.descending(), total=len(graph), unit=" nodes"):
