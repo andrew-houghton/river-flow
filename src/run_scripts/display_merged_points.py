@@ -21,7 +21,6 @@ job_name = "run_scripts"
 report_settings(size, frequency, job_name)
 height_map = load_and_crop_data(size, offset).tolist()
 
-
 graph = LocationGraph(height_map)
 
 def colour_func(num_points):

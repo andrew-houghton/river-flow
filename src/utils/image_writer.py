@@ -20,8 +20,9 @@ class ImageWriter(object):
 
     def __enter__(self):
         self._save()
+        return self
     
-    def __exit__(self):
+    def __exit__(self, type, value, traceback):
         self._save()
 
     def update(self, node):
