@@ -3,7 +3,7 @@ from operator import attrgetter
 from typing import List
 from typing import Set
 from data_structures.node import Node
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm
 
 
 def map_with_index(func, data, desc=None, progress_bar=True):
