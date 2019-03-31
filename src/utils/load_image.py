@@ -12,6 +12,7 @@ def load_image_data() -> TiffImagePlugin.TiffImageFile:
         handle.write(data)
     return Img.open(path + 'dem2.tiff')
 
-def load_and_crop_data(size, offset):
+def load_and_crop_data(config: dict):
+    size, offset = config['size'], config['offset']
     raw_height_array = np.asarray(load_image_data())
     return raw_height_array[offset[0]:offset[0]+size[0], offset[1]:offset[1]+size[1]]

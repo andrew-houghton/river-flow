@@ -1,30 +1,21 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# Imports
 from tqdm import tqdm
-
-import sys
-sys.path.append("../")
-
+from utils.colour import get_colour_function
 from algorithms.flow import flow
-from data_structures.location_graph import LocationGraph
 from utils.dummy_writer import DummyWriter
 from utils.image_writer import ImageWriter
-from utils.report_settings import report_settings
 from utils.load_image import load_and_crop_data
-from utils.colour import get_colour_function
 from utils.publish import make_video, make_image
+import pickle
 
-# Params
-size = (890, 890)
-offset = (0, 0)
-frequency = 8000
-job_name = "run_scripts"
-report_settings(size, frequency, job_name)
-height_map = load_and_crop_data(size, offset).tolist()
 
-graph = LocationGraph(height_map)
+config = {
+    'size': (1000, 1000),
+    'offset': (0, 0),
+    frequency: 8000,
+    job_name: "run_scripts"
+}
+
+graph=pickle.load(open('graph.pkl', 'rb'))
 
 nodes_with_flow = flow(graph, DummyWriter(), size)
 

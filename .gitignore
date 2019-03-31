@@ -10,6 +10,7 @@ venv/
 *.tif
 *.tiff
 *.avi
+*.pkl
 
 # Test runner scripts
 test.sh

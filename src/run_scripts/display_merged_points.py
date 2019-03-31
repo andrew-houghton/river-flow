@@ -12,7 +12,6 @@ from utils.load_image import load_and_crop_data
 from utils.colour import get_colour_function
 from utils.publish import make_video, make_image
 
-
 # Params
 size = (890, 890)
 offset = (0, 0)
