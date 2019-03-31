@@ -8,22 +8,16 @@ from utils.publish import make_video, make_image
 import pickle
 
 
-config = {
-    'size': (1000, 1000),
-    'offset': (0, 0),
-    frequency: 8000,
-    job_name: "run_scripts"
-}
+graph = pickle.load(open('graph.pkl', 'rb'))
 
-graph=pickle.load(open('graph.pkl', 'rb'))
-
-nodes_with_flow = flow(graph, DummyWriter(), size)
+nodes_with_flow = flow(graph, DummyWriter(), True)
 
 flows = [n.flow for n in nodes_with_flow.ascending()]
 
-with ImageWriter(size, frequency, job_name, get_colour_function(flows)) as imgWriter:
+with ImageWriter(graph.config, get_colour_function(flows)) as imgWriter:
     for node in tqdm(graph.descending(), total=len(graph), unit=" nodes"):
         imgWriter.update(node)
 
+job_name = graph.config['job_name']
 make_video(job_name, quality=1)
-make_image(job_name, load_and_crop_data(size, offset))
+make_image(job_name, load_and_crop_data(graph.config))
