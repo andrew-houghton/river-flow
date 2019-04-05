@@ -96,8 +96,6 @@ class LocationGraphBuilder:
                     if not any([overlaps(j.position, k.position) for k in all_possible_outflows]):
                         all_possible_outflows.append(j)
 
-        # outflows connected to nodes that no longer exist should be removed and changed to the new node
-        
         original.outflow = all_possible_outflows
 
 
@@ -113,10 +111,18 @@ class LocationGraphBuilder:
                         self.merge_node_set_into_node(node, attached_nodes)
 
     def make_clean_node_list(self, node_grid):
+        print('Creating clean node list')
         nodes = [i for i in sum(node_grid, []) if not i.deleted]
+
+        for node in nodes:
+            for i in node.outflow:
+                if i.deleted:
+                    node.outflow.remove(i)
+
         for node in nodes:
             del node.deleted
             del node.touches
+        
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
