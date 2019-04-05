@@ -35,7 +35,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(
             set(node.__dict__.keys()),
             {'outflow', 'altitude', 'flow', 'is_border', 'above', 'below', 'position'}
-            )
+        )
 
     def test_node_merging(self):
         graph = LocationGraph([[0.1, 0.2], [0.1, 0.3]])
@@ -67,7 +67,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(
             top.position,
             {(0,0),(0,1),(0,2),(1,0),(1,2),(2,0),(2,1),(2,2)}
-            )
+        )
         self.assertEqual(top.altitude, 2)
         self.assertEqual(len(top.outflow), 1)
         self.assertEqual(top.is_border, True)

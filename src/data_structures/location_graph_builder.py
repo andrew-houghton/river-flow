@@ -77,7 +77,7 @@ class LocationGraphBuilder:
         return seen
 
     def merge_node_set_into_node(self, original: Node, attached: Set[Node]):
-        # border attribute shuold be on if any are borders
+        # border attribute should be true if any are borders
         original.is_border = any([i.is_border for i in attached])
 
         # all nodes in attached should be removed from grid
@@ -96,6 +96,8 @@ class LocationGraphBuilder:
                     if not any([overlaps(j.position, k.position) for k in all_possible_outflows]):
                         all_possible_outflows.append(j)
 
+        # outflows connected to nodes that no longer exist should be removed and changed to the new node
+        
         original.outflow = all_possible_outflows
 
 

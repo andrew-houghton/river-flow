@@ -5,7 +5,11 @@ graph = pickle.load(open('graph.pkl', 'rb'))
 
 
 def flood(point):
+    points_in_lake = generate_lake(point)
+    # TODO Merge the list of points in the lake into one point
 
+
+def generate_lake(point):
     # Store points which are part of the lake in a list
     lake = []
 

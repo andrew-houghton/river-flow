@@ -7,7 +7,7 @@ from utils.dummy_writer import DummyWriter
 
 
 class TestFlow(unittest.TestCase):
-    def square_list(self, n):
+    def square_list(self,  n):
         return [list(range(n * i, n * (i + 1))) for i in range(n)]
 
     def flow(self, data):
@@ -24,15 +24,19 @@ class TestFlow(unittest.TestCase):
         flows = self.flow([[1, 2, 3]])
         self.assertEqual([1, 1, 1], flows)
 
-    def test_2d_flow(self):
+    def test_2d_flow_3x3(self):
         flows = self.flow(self.square_list(3))
-        self.assertEqual([1.0, 1.75, 1.0, 1.25, 1.0,
-                          1.0, 1.0, 1.0, 1.0], flows)
+        self.assertEqual(
+            [1.4, 1.3, 1.2, 1.1, 1.0, 1.0, 1.0, 1.0, 1.0],
+            flows
+        )
 
-    def test_large_flow(self):
-        flows = self.flow(self.square_list(5))
-        expected = [1.0, 3.943672839506173, 3.7662037037037037, 3.1064814814814814, 1.0, 1.5887345679012346,
-                    3.5324074074074074, 3.3194444444444446, 2.5277777777777777, 1.0,
-                    1.3958333333333333, 2.375, 2.2777777777777777, 1.8333333333333335, 1.0, 1.199074074074074,
-                    1.1944444444444444, 1.1666666666666667, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-        self.assertEqual(expected, flows)
+    def test_2d_flow_4x4(self):
+        flows = self.flow(self.square_list(4))
+        self.assertEqual(
+            [1.7060327019362067, 2.1633696299149188, 1.9024543958544868,
+            1.3591260810195722, 1.555407723819194, 1.8356850250341374,
+            1.5562130177514792, 1.2307692307692308, 1.0828402366863905,
+            1.0769230769230769, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            flows
+        )
