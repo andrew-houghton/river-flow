@@ -122,7 +122,7 @@ class LocationGraphBuilder:
         for node in nodes:
             del node.deleted
             del node.touches
-        
+
         return nodes
 
     def make_sorted_linked_list(self, nodes: List[Node]):
