@@ -69,7 +69,7 @@ Note: figure out if therer is a valid time to flood a region and finish with mul
 
 ## Data
 
-Landsat 8 data from ASTGTM. 30m spaced grid of height data. [Link to dataset info.](https://lpdaac.usgs.gov/dataset_discovery/aster/aster_products_table/astgtm)
+Data from ASTGTM. 30m spaced grid of height data. [Link to dataset info.](https://lpdaac.usgs.gov/dataset_discovery/aster/aster_products_table/astgtm)
 
 ## Tests
 
